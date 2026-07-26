@@ -1,0 +1,16 @@
+services:
+  db:
+    container_name: nebula
+    image: postgres:16
+    environment:
+      POSTGRES_DB: nebula
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: devpassword
+    volumes:
+      - nebula-db:/var/lib/postgresql/data
+    ports:
+      - "5332:5432"
+    restart: unless-stopped
+
+volumes:
+  nebula-db:
