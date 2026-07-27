@@ -2,12 +2,14 @@ package com.izhan.nebula.service;
 
 import com.izhan.nebula.model.FocusSession;
 import com.izhan.nebula.model.Planet;
+import com.izhan.nebula.model.Subject;
 import com.izhan.nebula.repository.FocusSessionRepository;
 import com.izhan.nebula.repository.PlanetRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class FocusSessionService {
@@ -49,6 +51,10 @@ public class FocusSessionService {
 
         planetRepository.save(planet);
 
+        if (planet.isComplete()) {
+            createNextPlanet(planet.getSubject());
+        }
+
         return focusSessionRepository.save(session);
     }
 
@@ -74,5 +80,16 @@ public class FocusSessionService {
                     "Session duration must be greater than zero."
             );
         }
+    }
+
+    private void createNextPlanet(Subject subject) {
+
+        Planet nextPlanet = new Planet(
+                "Unnamed Planet",
+                ThreadLocalRandom.current().nextLong(),
+                subject
+        );
+
+        planetRepository.save(nextPlanet);
     }
 }
