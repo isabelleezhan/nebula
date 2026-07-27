@@ -9,6 +9,8 @@ import com.izhan.nebula.repository.SubjectRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class PlanetService {
 
@@ -44,6 +46,20 @@ public class PlanetService {
                                         + subjectId
                         )
                 );
+    }
+
+    @Transactional(readOnly = true)
+    public List<Planet> getPlanetsForSubject(Long subjectId) {
+
+        Subject subject = subjectRepository.findById(subjectId)
+                .orElseThrow(() ->
+                        new IllegalArgumentException(
+                                "Subject not found: " + subjectId
+                        )
+                );
+
+        return planetRepository
+                .findBySubjectOrderByCreatedAtAsc(subject);
     }
 }
 
