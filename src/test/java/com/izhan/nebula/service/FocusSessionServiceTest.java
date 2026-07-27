@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,10 +26,12 @@ class FocusSessionServiceTest {
     void setUp() {
         focusSessionRepository = mock(FocusSessionRepository.class);
         planetRepository = mock(PlanetRepository.class);
+        SubjectRepository subjectRepository = mock(SubjectRepository.class);
 
         focusSessionService = new FocusSessionService(
                 focusSessionRepository,
-                planetRepository
+                planetRepository,
+                subjectRepository
         );
         user = new User(
                 "test@example.com",
@@ -46,8 +49,14 @@ class FocusSessionServiceTest {
                 subject
         );
 
-        when(planetRepository.findById(1L))
-                .thenReturn(Optional.of(planet));
+        when(
+                planetRepository.findByIdAndSubjectUser(
+                        1L,
+                        user
+                )
+        ).thenReturn(
+                Optional.of(planet)
+        );
 
         when(focusSessionRepository.save(any(FocusSession.class)))
                 .thenAnswer(invocation -> invocation.getArgument(0));
@@ -63,7 +72,8 @@ class FocusSessionServiceTest {
                         1L,
                         start,
                         end,
-                        47
+                        47,
+                        user
                 );
 
         assertEquals(47, planet.getAccumulatedFocusMinutes());
@@ -76,27 +86,31 @@ class FocusSessionServiceTest {
 
     @Test
     void recordingSessionFailsWhenPlanetDoesNotExist() {
-        when(planetRepository.findById(99L))
-                .thenReturn(Optional.empty());
 
-        LocalDateTime start =
-                LocalDateTime.of(2026, 7, 25, 15, 0);
+        User user = new User(
+                "test@example.com",
+                "fake-hash"
+        );
 
-        LocalDateTime end =
-                LocalDateTime.of(2026, 7, 25, 15, 30);
+        when(
+                planetRepository.findByIdAndSubjectUser(
+                        99L,
+                        user
+                )
+        ).thenReturn(Optional.empty());
 
         assertThrows(
                 IllegalArgumentException.class,
                 () -> focusSessionService.recordCompletedSession(
                         99L,
-                        start,
-                        end,
-                        30
+                        LocalDateTime.now(),
+                        LocalDateTime.now().plusMinutes(30),
+                        30,
+                        user
                 )
         );
 
-        verify(planetRepository, never()).save(any());
-        verify(focusSessionRepository, never()).save(any());
+        verifyNoInteractions(focusSessionRepository);
     }
 
     @Test
@@ -113,7 +127,8 @@ class FocusSessionServiceTest {
                         1L,
                         start,
                         end,
-                        0
+                        0,
+                        user
                 )
         );
 
@@ -137,7 +152,8 @@ class FocusSessionServiceTest {
                         1L,
                         start,
                         end,
-                        30
+                        30,
+                        user
                 )
         );
 
@@ -162,8 +178,14 @@ class FocusSessionServiceTest {
                 Planet.DEFAULT_REQUIRED_FOCUS_MINUTES - 30
         );
 
-        when(planetRepository.findById(1L))
-                .thenReturn(Optional.of(planet));
+        when(
+                planetRepository.findByIdAndSubjectUser(
+                        1L,
+                        user
+                )
+        ).thenReturn(
+                Optional.of(planet)
+        );
 
         when(focusSessionRepository.save(any(FocusSession.class)))
                 .thenAnswer(invocation ->
@@ -180,7 +202,8 @@ class FocusSessionServiceTest {
                 1L,
                 start,
                 end,
-                30
+                30,
+                user
         );
 
         assertTrue(planet.isComplete());
@@ -210,8 +233,14 @@ class FocusSessionServiceTest {
                 Planet.DEFAULT_REQUIRED_FOCUS_MINUTES - 30
         );
 
-        when(planetRepository.findById(1L))
-                .thenReturn(Optional.of(planet));
+        when(
+                planetRepository.findByIdAndSubjectUser(
+                        1L,
+                        user
+                )
+        ).thenReturn(
+                Optional.of(planet)
+        );
 
         when(focusSessionRepository.save(any(FocusSession.class)))
                 .thenAnswer(invocation ->
@@ -228,7 +257,8 @@ class FocusSessionServiceTest {
                 1L,
                 start,
                 end,
-                30
+                30,
+                user
         );
 
         assertTrue(planet.isComplete());
@@ -262,5 +292,82 @@ class FocusSessionServiceTest {
         assertFalse(
                 nextPlanet.isComplete()
         );
+    }
+
+    @Test
+    void rejectsPlanetOwnedByDifferentUser() {
+
+        User user = new User(
+                "alice@example.com",
+                "fake-hash"
+        );
+
+        Long planetId = 1L;
+
+        when(
+                planetRepository.findByIdAndSubjectUser(
+                        planetId,
+                        user
+                )
+        ).thenReturn(Optional.empty());
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> focusSessionService.recordCompletedSession(
+                        planetId,
+                        LocalDateTime.now(),
+                        LocalDateTime.now().plusMinutes(30),
+                        30,
+                        user
+                )
+        );
+
+        verifyNoInteractions(
+                focusSessionRepository
+        );
+    }
+
+    @Test
+    void getsSessionsForOwnedPlanet() {
+
+        User user = new User(
+                "test@example.com",
+                "fake-hash"
+        );
+
+        Subject subject = new Subject(
+                "CPSC 213",
+                user
+        );
+
+        Planet planet = new Planet(
+                "Planet",
+                123L,
+                subject
+        );
+
+        when(
+                planetRepository.findByIdAndSubjectUser(
+                        1L,
+                        user
+                )
+        ).thenReturn(
+                Optional.of(planet)
+        );
+
+        when(
+                focusSessionRepository
+                        .findByPlanetOrderByStartedAtAsc(planet)
+        ).thenReturn(
+                List.of()
+        );
+
+        List<FocusSession> sessions =
+                focusSessionService.getSessionsForPlanet(
+                        1L,
+                        user
+                );
+
+        assertTrue(sessions.isEmpty());
     }
 }

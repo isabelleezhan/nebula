@@ -3,6 +3,7 @@ package com.izhan.nebula.service;
 import com.izhan.nebula.model.Planet;
 import com.izhan.nebula.model.PlanetStage;
 import com.izhan.nebula.model.Subject;
+import com.izhan.nebula.model.User;
 import com.izhan.nebula.repository.PlanetRepository;
 import com.izhan.nebula.repository.SubjectRepository;
 
@@ -26,7 +27,7 @@ public class PlanetService {
     }
 
     @Transactional(readOnly = true)
-    public Planet getActivePlanet(Long subjectId) {
+    public Planet getActivePlanet(Long subjectId, User user) {
 
         Subject subject = subjectRepository.findById(subjectId)
                 .orElseThrow(() ->
@@ -36,8 +37,9 @@ public class PlanetService {
                 );
 
         return planetRepository
-                .findFirstBySubjectAndStageNot(
+                .findFirstBySubjectAndSubjectUserAndStageNot(
                         subject,
+                        user,
                         PlanetStage.COMPLETE
                 )
                 .orElseThrow(() ->
@@ -49,9 +51,9 @@ public class PlanetService {
     }
 
     @Transactional(readOnly = true)
-    public List<Planet> getPlanetsForSubject(Long subjectId) {
+    public List<Planet> getPlanetsForSubject(Long subjectId, User user) {
 
-        Subject subject = subjectRepository.findById(subjectId)
+        Subject subject = subjectRepository.findByIdAndUser(subjectId, user)
                 .orElseThrow(() ->
                         new IllegalArgumentException(
                                 "Subject not found: " + subjectId

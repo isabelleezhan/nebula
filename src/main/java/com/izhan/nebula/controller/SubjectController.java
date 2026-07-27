@@ -1,9 +1,11 @@
 package com.izhan.nebula.controller;
 
 import com.izhan.nebula.dto.CreateSubjectRequest;
+import com.izhan.nebula.dto.FocusSessionResponse;
 import com.izhan.nebula.dto.SubjectResponse;
 import com.izhan.nebula.model.Subject;
 import com.izhan.nebula.model.User;
+import com.izhan.nebula.service.FocusSessionService;
 import com.izhan.nebula.service.SubjectService;
 
 import com.izhan.nebula.service.UserService;
@@ -22,13 +24,16 @@ public class SubjectController {
 
     private final UserService userService;
     private final SubjectService subjectService;
+    private final FocusSessionService focusSessionService;
 
     public SubjectController(
             SubjectService subjectService,
-            UserService userService) {
+            UserService userService,
+            FocusSessionService focusSessionService) {
 
         this.subjectService = subjectService;
         this.userService = userService;
+        this.focusSessionService = focusSessionService;
     }
 
     @PostMapping
@@ -74,5 +79,24 @@ public class SubjectController {
                 subjectService.getSubject(subjectId, user);
 
         return SubjectResponse.from(subject);
+    }
+
+    @GetMapping("/{subjectId}/sessions")
+    public List<FocusSessionResponse> getSessionsForSubject(
+            @PathVariable Long subjectId,
+            Principal principal) {
+
+        User user = userService.getByEmail(
+                principal.getName()
+        );
+
+        return focusSessionService
+                .getSessionsForSubject(
+                        subjectId,
+                        user
+                )
+                .stream()
+                .map(FocusSessionResponse::from)
+                .toList();
     }
 }
