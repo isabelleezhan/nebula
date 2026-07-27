@@ -1,5 +1,7 @@
 package com.izhan.nebula.service;
 
+import com.izhan.nebula.exception.DuplicateResourceException;
+import com.izhan.nebula.exception.ResourceNotFoundException;
 import com.izhan.nebula.model.Planet;
 import com.izhan.nebula.model.Subject;
 import com.izhan.nebula.model.User;
@@ -49,7 +51,7 @@ public class SubjectService {
                 user,
                 trimmedName)) {
 
-            throw new IllegalArgumentException(
+            throw new DuplicateResourceException(
                     "You already have a subject with this name."
             );
         }
@@ -88,7 +90,7 @@ public class SubjectService {
         return subjectRepository
                 .findByIdAndUser(subjectId, user)
                 .orElseThrow(() ->
-                        new IllegalArgumentException(
+                        new ResourceNotFoundException(
                                 "Subject not found: " + subjectId
                         )
                 );

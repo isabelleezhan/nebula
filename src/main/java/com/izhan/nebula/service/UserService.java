@@ -1,5 +1,7 @@
 package com.izhan.nebula.service;
 
+import com.izhan.nebula.exception.DuplicateResourceException;
+import com.izhan.nebula.exception.ResourceNotFoundException;
 import com.izhan.nebula.model.User;
 import com.izhan.nebula.repository.UserRepository;
 
@@ -30,7 +32,7 @@ public class UserService {
                 email.trim().toLowerCase();
 
         if (userRepository.existsByEmailIgnoreCase(normalizedEmail)) {
-            throw new IllegalArgumentException(
+            throw new DuplicateResourceException(
                     "An account with this email already exists."
             );
         }
@@ -47,8 +49,8 @@ public class UserService {
         return userRepository
                 .findByEmailIgnoreCase(email)
                 .orElseThrow(() ->
-                        new IllegalArgumentException(
-                                "User not found: " + email
+                        new ResourceNotFoundException(
+                                "User not found."
                         )
                 );
     }

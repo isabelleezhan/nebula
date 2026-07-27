@@ -1,5 +1,6 @@
 package com.izhan.nebula.service;
 
+import com.izhan.nebula.exception.ResourceNotFoundException;
 import com.izhan.nebula.model.Planet;
 import com.izhan.nebula.model.PlanetStage;
 import com.izhan.nebula.model.Subject;
@@ -31,7 +32,7 @@ public class PlanetService {
 
         Subject subject = subjectRepository.findById(subjectId)
                 .orElseThrow(() ->
-                        new IllegalArgumentException(
+                        new ResourceNotFoundException(
                                 "Subject not found: " + subjectId
                         )
                 );
@@ -43,7 +44,7 @@ public class PlanetService {
                         PlanetStage.COMPLETE
                 )
                 .orElseThrow(() ->
-                        new IllegalStateException(
+                        new ResourceNotFoundException(
                                 "No active planet exists for subject: "
                                         + subjectId
                         )

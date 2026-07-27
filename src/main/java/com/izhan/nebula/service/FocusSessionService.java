@@ -1,5 +1,6 @@
 package com.izhan.nebula.service;
 
+import com.izhan.nebula.exception.ResourceNotFoundException;
 import com.izhan.nebula.model.FocusSession;
 import com.izhan.nebula.model.Planet;
 import com.izhan.nebula.model.Subject;
@@ -80,7 +81,7 @@ public class FocusSessionService {
                         user
                 )
                 .orElseThrow(() ->
-                        new IllegalArgumentException(
+                        new ResourceNotFoundException(
                                 "Planet not found: " + planetId
                         )
                 );
@@ -100,7 +101,7 @@ public class FocusSessionService {
                         user
                 )
                 .orElseThrow(() ->
-                        new IllegalArgumentException(
+                        new ResourceNotFoundException(
                                 "Subject not found: " + subjectId
                         )
                 );
