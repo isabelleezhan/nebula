@@ -20,12 +20,17 @@ public class Subject {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     protected Subject() {
         // JPA requires
     }
 
-    public Subject(String name) {
+    public Subject(String name, User user) {
         this.name = name;
+        this.user = user;
     }
 
     @PrePersist
@@ -39,6 +44,10 @@ public class Subject {
 
     public String getName() {
         return name;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     public LocalDateTime getCreatedAt() {

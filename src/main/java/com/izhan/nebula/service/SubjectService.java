@@ -2,12 +2,14 @@ package com.izhan.nebula.service;
 
 import com.izhan.nebula.model.Planet;
 import com.izhan.nebula.model.Subject;
+import com.izhan.nebula.model.User;
 import com.izhan.nebula.repository.PlanetRepository;
 import com.izhan.nebula.repository.SubjectRepository;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
@@ -25,47 +27,76 @@ public class SubjectService {
     }
 
     @Transactional
-    public Subject createSubject(String name) {
+    public Subject createSubject(
+            String name,
+            User user) {
 
-        validateName(name);
-
-        String trimmedName = name.trim();
-
-        if (subjectRepository.existsByNameIgnoreCase(trimmedName)) {
-            throw new IllegalArgumentException(
-                    "A subject with this name already exists."
-            );
-        }
-
-        Subject subject = new Subject(trimmedName);
-
-        Subject savedSubject =
-                subjectRepository.save(subject);
-
-        Planet firstPlanet = new Planet(
-                generatePlanetName(),
-                generatePlanetSeed(),
-                savedSubject
-        );
-
-        planetRepository.save(firstPlanet);
-
-        return savedSubject;
-    }
-
-    private void validateName(String name) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException(
                     "Subject name cannot be blank."
             );
         }
+
+        if (user == null) {
+            throw new IllegalArgumentException(
+                    "User cannot be null."
+            );
+        }
+
+        String trimmedName = name.trim();
+
+        if (subjectRepository.existsByUserAndNameIgnoreCase(
+                user,
+                trimmedName)) {
+
+            throw new IllegalArgumentException(
+                    "You already have a subject with this name."
+            );
+        }
+
+        Subject subject = new Subject(
+                trimmedName,
+                user
+        );
+
+        Subject savedSubject =
+                subjectRepository.save(subject);
+
+        Planet planet = new Planet(
+                "Unnamed Planet",
+                generatePlanetSeed(),
+                savedSubject
+        );
+
+        planetRepository.save(planet);
+
+        return savedSubject;
+    }
+
+    @Transactional(readOnly = true)
+    public List<Subject> getAllSubjects(User user) {
+
+        return subjectRepository
+                .findByUserOrderByCreatedAtAsc(user);
+    }
+
+    @Transactional(readOnly = true)
+    public Subject getSubject(
+            Long subjectId,
+            User user) {
+
+        return subjectRepository
+                .findByIdAndUser(subjectId, user)
+                .orElseThrow(() ->
+                        new IllegalArgumentException(
+                                "Subject not found: " + subjectId
+                        )
+                );
     }
 
     private long generatePlanetSeed() {
-        return ThreadLocalRandom.current().nextLong();
-    }
-
-    private String generatePlanetName() {
-        return "Unnamed Planet";
+        return ThreadLocalRandom
+                .current()
+                .nextLong();
     }
 }
