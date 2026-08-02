@@ -1,0 +1,211 @@
+.landing-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    background: #171717;
+    color: #ffffff;
+}
+
+a {
+    text-decoration: none;
+}
+
+.landing-nav {
+    height: 76px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 56px;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.landing-logo {
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+}
+
+.landing-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.login-button,
+.launch-button,
+.hero-launch-button {
+    font: inherit;
+    cursor: pointer;
+    text-decoration: none !important;
+}
+
+.login-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px 16px;
+
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 999px;
+
+    color: inherit;
+}
+
+.launch-button {
+    padding: 10px 18px;
+
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 999px;
+
+    background: rgba(255, 255, 255, 0.08);
+    color: inherit;
+}
+
+.landing-main {
+    flex: 1;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    align-items: center;
+
+    width: 100%;
+    max-width: 1400px;
+
+    margin: 0 auto;
+    padding: 72px 64px;
+}
+
+.landing-hero {
+    max-width: 650px;
+}
+
+.landing-eyebrow {
+    margin: 0 0 22px;
+
+    font-size: 0.75rem;
+    letter-spacing: 0.22em;
+
+    opacity: 0.55;
+}
+
+.landing-hero h1 {
+    margin: 0;
+
+    font-size: clamp(3.4rem, 6vw, 6.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+}
+
+.landing-description {
+    max-width: 520px;
+
+    margin: 28px 0 0;
+
+    line-height: 1.7;
+
+    opacity: 0.65;
+}
+
+.hero-launch-button {
+    margin-top: 32px;
+
+    padding: 15px 24px;
+
+    border: none;
+    border-radius: 999px;
+
+    font-weight: 600;
+}
+
+.landing-planet-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 500px;
+}
+
+.planet-placeholder {
+    width: 340px;
+    aspect-ratio: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    background: radial-gradient(
+            circle at 35% 30%,
+            rgba(255, 255, 255, 0.2),
+            rgba(255, 255, 255, 0.04) 45%,
+            rgba(0, 0, 0, 0.4) 100%
+    );
+
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+
+    opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+
+    .landing-nav {
+        height: 64px;
+        padding: 0 20px;
+    }
+
+    .landing-logo {
+        font-size: 1rem;
+    }
+
+    .landing-actions {
+        gap: 8px;
+    }
+
+    .login-button {
+        padding: 8px 10px;
+    }
+
+    .launch-button {
+        padding: 8px 14px;
+    }
+
+    .landing-main {
+        grid-template-columns: 1fr;
+
+        padding: 48px 24px 64px;
+
+        text-align: center;
+    }
+
+    .landing-hero {
+        max-width: none;
+    }
+
+    .landing-hero h1 {
+        font-size: clamp(3rem, 10vw, 5rem);
+    }
+
+    .landing-description {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .landing-planet-area {
+        min-height: 360px;
+        margin-top: 40px;
+    }
+
+    .planet-placeholder {
+        width: min(75vw, 320px);
+    }
+}

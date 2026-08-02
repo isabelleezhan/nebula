@@ -1,0 +1,60 @@
+* {
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: "Better VCR";
+    src: url("./assets/fonts/BetterVCR.ttf") format("truetype");
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Apple Garamond";
+    src: url("./assets/fonts/AppleGaramond-Light.ttf") format("truetype");
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Apple Garamond";
+    src: url("./assets/fonts/AppleGaramond-LightItalic.ttf") format("truetype");
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+}
+
+html,
+body,
+#root {
+    margin: 0;
+    min-width: 320px;
+    min-height: 100%;
+}
+
+.landing-logo,
+.landing-eyebrow,
+.landing-hero h1,
+.auth-logo,
+.auth-eyebrow,
+.auth-panel h1,
+h1, h2, h3,
+button {
+    font-family: "Better VCR",
+    monospace;
+}
+
+body {
+    font-family: "Apple Garamond",
+    monospace;
+
+    font-size: 18px;
+}
+
+button,
+input {
+    font: inherit;
+}
+
