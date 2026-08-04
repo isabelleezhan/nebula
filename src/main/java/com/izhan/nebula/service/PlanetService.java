@@ -30,7 +30,7 @@ public class PlanetService {
     @Transactional(readOnly = true)
     public Planet getActivePlanet(Long subjectId, User user) {
 
-        Subject subject = subjectRepository.findById(subjectId)
+        Subject subject = subjectRepository.findByIdAndUser(subjectId, user)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
                                 "Subject not found: " + subjectId
