@@ -33,7 +33,7 @@ function LandingPage() {
 
                 <section className="landing-hero">
                     <p className="landing-eyebrow">
-                        YOUR FOCUS. YOUR UNIVERSE.
+                        GALACTIC FOCUS.
                     </p>
 
                     <h1>
@@ -43,19 +43,22 @@ function LandingPage() {
                     </h1>
 
                     <p className="landing-description">
-                        Focus sessions shape evolving worlds.
-                        Build planets, expand your galaxy,
+                        Focus to evolve planets.
+                        <br/>
+                        Expand your galaxy,
                         and discover where your time takes you.
                     </p>
-
-                    <button className="hero-launch-button">
-                        Begin your journey
-                    </button>
                 </section>
 
                 <section className="landing-planet-area">
-                    <div className="planet-placeholder">
-                        PLANET
+                    <div className="planet-scene">
+                        <div className="planet-glow"/>
+
+                        <img src="../../public/4158376800-cropped.gif"
+                             alt="Planet"
+                             className="planet-placeholder-image"/>
+
+                        <div className="planet-moon"/>
                     </div>
                 </section>
 

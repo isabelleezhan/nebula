@@ -1,11 +1,11 @@
 import '../styles/AuthPage.css'
 import {Link, useNavigate} from 'react-router'
 import {useState} from 'react'
-import {loginUser} from '../api/authApi'
-
+import {useAuth} from '../context/AuthContext'
 
 function LoginPage() {
     const navigate = useNavigate()
+    const {login} = useAuth()
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -21,8 +21,10 @@ function LoginPage() {
         try {
             setIsSubmitting(true)
 
-            const user = await loginUser(email, password)
-
+            const user = await login(
+                email,
+                password
+            )
             console.log('Logged in user:', user)
 
             navigate('/orbit')
@@ -115,11 +117,11 @@ function LoginPage() {
                 <section className="auth-visual">
                     <div className="auth-orbit">
 
-                        <div className="auth-star">
-                            ✦
-                        </div>
+                        <div className="auth-glow"/>
 
-                        <div className="auth-planet"/>
+                        <img src="../../public/1278300404-cropped.gif"
+                             alt="Planet"
+                             className="planet-image"/>
 
                     </div>
                 </section>

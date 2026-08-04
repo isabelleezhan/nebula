@@ -146,11 +146,13 @@ function RegisterPage() {
 
                 <section className="auth-visual">
                     <div className="auth-orbit">
-                        <div className="auth-star">
-                            ✦
-                        </div>
 
-                        <div className="auth-planet"/>
+                        <div className="auth-glow"/>
+
+                        <img src="../../public/1278300405-cropped.gif"
+                             alt="Planet"
+                             className="planet-image"/>
+
                     </div>
                 </section>
             </main>
