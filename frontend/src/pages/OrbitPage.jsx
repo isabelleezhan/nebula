@@ -1,58 +1,33 @@
-import {
-    useEffect,
-    useState
-} from 'react'
+import {useEffect, useState} from 'react'
 
 import AppNav from '../components/AppNav'
 
-import {
-    createSubject,
-    getSubjects
-} from '../api/subjectApi'
+import {createSubject, getSubjects} from '../api/subjectApi.js'
 
-import {getActivePlanet} from '../api/planetApi'
+import {getActivePlanet} from '../api/planetApi.js'
+import {recordFocusSession} from '../api/focusSessionApi'
 import '../styles/OrbitPage.css'
 
 
 function OrbitPage() {
     const [subjects, setSubjects] = useState([])
-
-    const [
-        selectedSubjectId,
-        setSelectedSubjectId
-    ] = useState('')
+    const [selectedSubjectId, setSelectedSubjectId] = useState('')
 
     const [planet, setPlanet] = useState(null)
 
-    const [isLoading, setIsLoading] =
-        useState(true)
+    const [isLoading, setIsLoading] = useState(true)
+    const [error, setError] = useState('')
 
-    const [error, setError] =
-        useState('')
+    const [isCreatingSubject, setIsCreatingSubject] = useState(false)
+    const [newSubjectName, setNewSubjectName] = useState('')
+    const [isCreating, setIsCreating] = useState(false)
+    const [elapsedSeconds, setElapsedSeconds] = useState(0)
 
-    const [
-        isCreatingSubject,
-        setIsCreatingSubject
-    ] = useState(false)
+    const [isFocusing, setIsFocusing] = useState(false)
+    const [isPaused, setIsPaused] = useState(false)
 
-    const [
-        newSubjectName,
-        setNewSubjectName
-    ] = useState('')
-
-    const [isCreating, setIsCreating] =
-        useState(false)
-
-    const [
-        elapsedSeconds,
-        setElapsedSeconds
-    ] = useState(0)
-
-    const [isFocusing, setIsFocusing] =
-        useState(false)
-
-    const [isPaused, setIsPaused] =
-        useState(false)
+    const [sessionStartedAt, setSessionStartedAt] = useState(null)
+    const [isSavingSession, setIsSavingSession] = useState(false)
 
 
     useEffect(() => {
@@ -60,15 +35,12 @@ function OrbitPage() {
             try {
                 setError('')
 
-                const loadedSubjects =
-                    await getSubjects()
+                const loadedSubjects = await getSubjects()
 
                 setSubjects(loadedSubjects)
 
                 if (loadedSubjects.length > 0) {
-                    setSelectedSubjectId(
-                        String(loadedSubjects[0].id)
-                    )
+                    setSelectedSubjectId(String(loadedSubjects[0].id))
                 }
             } catch (error) {
                 setError(error.message)
@@ -91,10 +63,7 @@ function OrbitPage() {
             try {
                 setError('')
 
-                const activePlanet =
-                    await getActivePlanet(
-                        selectedSubjectId
-                    )
+                const activePlanet = await getActivePlanet(selectedSubjectId)
 
                 setPlanet(activePlanet)
             } catch (error) {
@@ -112,31 +81,51 @@ function OrbitPage() {
             return
         }
 
-        const intervalId =
-            window.setInterval(() => {
-                setElapsedSeconds(
-                    (currentSeconds) =>
-                        currentSeconds + 1
-                )
-            }, 1000)
+        const intervalId = window.setInterval(() => {
+            setElapsedSeconds((currentSeconds) => currentSeconds + 1)
+        }, 1000)
 
         return () => {
             window.clearInterval(intervalId)
         }
     }, [isFocusing, isPaused])
 
+    function formatLocalDateTime(date) {
+        const year = date.getFullYear()
+
+        const month = String(
+            date.getMonth() + 1
+        ).padStart(2, '0')
+
+        const day = String(
+            date.getDate()
+        ).padStart(2, '0')
+
+        const hours = String(
+            date.getHours()
+        ).padStart(2, '0')
+
+        const minutes = String(
+            date.getMinutes()
+        ).padStart(2, '0')
+
+        const seconds = String(
+            date.getSeconds()
+        ).padStart(2, '0')
+
+        return (
+            `${year}-${month}-${day}` +
+            `T${hours}:${minutes}:${seconds}`
+        )
+    }
 
     async function handleCreateSubject(event) {
         event.preventDefault()
 
-        const trimmedName =
-            newSubjectName.trim()
+        const trimmedName = newSubjectName.trim()
 
         if (!trimmedName) {
-            setError(
-                'Please enter a subject name.'
-            )
-
+            setError('Please enter a subject name.')
             return
         }
 
@@ -144,19 +133,11 @@ function OrbitPage() {
             setError('')
             setIsCreating(true)
 
-            const createdSubject =
-                await createSubject(trimmedName)
+            const createdSubject = await createSubject(trimmedName)
 
-            setSubjects(
-                (currentSubjects) => [
-                    ...currentSubjects,
-                    createdSubject
-                ]
-            )
+            setSubjects((currentSubjects) => [...currentSubjects, createdSubject])
 
-            setSelectedSubjectId(
-                String(createdSubject.id)
-            )
+            setSelectedSubjectId(String(createdSubject.id))
 
             setNewSubjectName('')
             setIsCreatingSubject(false)
@@ -169,60 +150,83 @@ function OrbitPage() {
 
 
     function formatTime(totalSeconds) {
-        const hours = Math.floor(
-            totalSeconds / 3600
-        )
+        const hours = Math.floor(totalSeconds / 3600)
 
-        const minutes = Math.floor(
-            (totalSeconds % 3600) / 60
-        )
+        const minutes = Math.floor((totalSeconds % 3600) / 60)
 
-        const seconds =
-            totalSeconds % 60
+        const seconds = totalSeconds % 60
 
-        const paddedMinutes =
-            String(minutes).padStart(2, '0')
+        const paddedMinutes = String(minutes).padStart(2, '0')
 
-        const paddedSeconds =
-            String(seconds).padStart(2, '0')
+        const paddedSeconds = String(seconds).padStart(2, '0')
 
         if (hours > 0) {
-            const paddedHours =
-                String(hours).padStart(2, '0')
+            const paddedHours = String(hours).padStart(2, '0')
 
-            return (
-                `${paddedHours}:` +
-                `${paddedMinutes}:` +
-                `${paddedSeconds}`
-            )
+            return (`${paddedHours}:` + `${paddedMinutes}:` + `${paddedSeconds}`)
         }
 
-        return (
-            `${paddedMinutes}:` +
-            `${paddedSeconds}`
-        )
+        return (`${paddedMinutes}:` + `${paddedSeconds}`)
     }
 
 
     function handleBeginFocus() {
+        setError('')
         setElapsedSeconds(0)
+        setSessionStartedAt(new Date())
         setIsFocusing(true)
         setIsPaused(false)
     }
 
 
     function handleTogglePause() {
-        setIsPaused(
-            (currentValue) =>
-                !currentValue
-        )
+        setIsPaused((currentValue) => !currentValue)
     }
 
 
-    function handleEndFocus() {
-        setIsFocusing(false)
-        setIsPaused(false)
-        setElapsedSeconds(0)
+    async function handleEndFocus() {
+        const durationMinutes = Math.floor(elapsedSeconds / 60)
+
+        if (durationMinutes < 1) {
+            setError('Focus for at least one minute before ending the mission.')
+            return
+        }
+
+        if (!planet || !sessionStartedAt) {
+            setError('Could not determine the current focus session.')
+            return
+        }
+
+        const endedAt = new Date()
+
+        try {
+            setError('')
+            setIsPaused(true)
+            setIsSavingSession(true)
+
+            await recordFocusSession({
+                planetId: planet.id,
+
+                startedAt: formatLocalDateTime(sessionStartedAt),
+
+                endedAt: formatLocalDateTime(endedAt),
+
+                durationMinutes
+            })
+
+            const refreshedPlanet = await getActivePlanet(selectedSubjectId)
+
+            setPlanet(refreshedPlanet)
+
+            setIsFocusing(false)
+            setIsPaused(false)
+            setElapsedSeconds(0)
+            setSessionStartedAt(null)
+        } catch (error) {
+            setError(error.message)
+        } finally {
+            setIsSavingSession(false)
+        }
     }
 
 
@@ -233,11 +237,7 @@ function OrbitPage() {
 
 
     if (isLoading) {
-        return (
-            <p>
-                Charting your orbit...
-            </p>
-        )
+        return (<p>Charting your orbit...</p>)
     }
 
 
@@ -251,344 +251,239 @@ function OrbitPage() {
                         CURRENT ORBIT
                     </p>
 
-                    {subjects.length > 0 && (
-                        <>
-                            <select
-                                className="subject-selector"
-                                value={selectedSubjectId}
-                                onChange={(event) => {
-                                    setSelectedSubjectId(
-                                        event.target.value
-                                    )
-                                }}
-                                disabled={isFocusing}
+                    {subjects.length > 0 && (<>
+                        <select
+                            className="subject-selector"
+                            value={selectedSubjectId}
+                            onChange={(event) => {
+                                setSelectedSubjectId(event.target.value)
+                            }}
+                            disabled={isFocusing}
+                        >
+                            {subjects.map((subject) => (<option
+                                key={subject.id}
+                                value={subject.id}
                             >
-                                {subjects.map(
-                                    (subject) => (
-                                        <option
-                                            key={subject.id}
-                                            value={subject.id}
-                                        >
-                                            {subject.name}
-                                        </option>
-                                    )
-                                )}
-                            </select>
+                                {subject.name}
+                            </option>))}
+                        </select>
 
-                            <button
-                                type="button"
-                                className="add-subject-button"
-                                onClick={() => {
-                                    setIsCreatingSubject(true)
-                                }}
-                                disabled={isFocusing}
-                            >
-                                + New star
-                            </button>
-                        </>
-                    )}
+                        <button
+                            type="button"
+                            className="add-subject-button"
+                            onClick={() => {
+                                setIsCreatingSubject(true)
+                            }}
+                            disabled={isFocusing}
+                        >
+                            + New star
+                        </button>
+                    </>)}
                 </section>
 
 
-                {error && (
-                    <p className="orbit-error">
-                        {error}
-                    </p>
-                )}
+                {error && (<p className="orbit-error">
+                    {error}
+                </p>)}
 
 
-                {isCreatingSubject &&
-                    subjects.length > 0 && (
-                        <form
-                            className={
-                                'create-subject-form ' +
-                                'create-subject-panel'
-                            }
-                            onSubmit={
-                                handleCreateSubject
-                            }
+                {isCreatingSubject && subjects.length > 0 && (<form
+                    className={'create-subject-form ' + 'create-subject-panel'}
+                    onSubmit={handleCreateSubject}
+                >
+                    <label
+                        htmlFor={'additional-subject-name'}
+                    >
+                        Create a new star
+                    </label>
+
+                    <input
+                        id={'additional-subject-name'}
+                        type="text"
+                        placeholder="MATH 101"
+                        value={newSubjectName}
+                        onChange={(event) => {
+                            setNewSubjectName(event.target.value)
+                        }}
+                        autoFocus
+                        required
+                    />
+
+                    <div
+                        className={'create-subject-actions'}
+                    >
+                        <button
+                            type="button"
+                            className={'secondary-button'}
+                            onClick={closeSubjectForm}
                         >
-                            <label
-                                htmlFor={
-                                    'additional-subject-name'
-                                }
+                            Cancel
+                        </button>
+
+                        <button
+                            type="submit"
+                            disabled={isCreating}
+                        >
+                            {isCreating ? 'Creating...' : 'Create star'}
+                        </button>
+                    </div>
+                </form>)}
+
+
+                {subjects.length === 0 ? (<section className="empty-orbit">
+                    {!isCreatingSubject ? (<>
+                        <p>
+                            You have not created
+                            a star yet.
+                        </p>
+
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setIsCreatingSubject(true)
+                            }}
+                        >
+                            Create your first subject
+                        </button>
+                    </>) : (<form
+                        className={'create-subject-form'}
+                        onSubmit={handleCreateSubject}
+                    >
+                        <label
+                            htmlFor={'new-subject-name'}
+                        >
+                            Name your first star
+                        </label>
+
+                        <input
+                            id="new-subject-name"
+                            type="text"
+                            placeholder="CPSC 213"
+                            value={newSubjectName}
+                            onChange={(event) => {
+                                setNewSubjectName(event.target.value)
+                            }}
+                            autoFocus
+                            required
+                        />
+
+                        <div
+                            className={'create-subject-actions'}
+                        >
+                            <button
+                                type="button"
+                                className={'secondary-button'}
+                                onClick={closeSubjectForm}
                             >
-                                Create a new star
-                            </label>
+                                Cancel
+                            </button>
 
-                            <input
-                                id={
-                                    'additional-subject-name'
-                                }
-                                type="text"
-                                placeholder="MATH 101"
-                                value={newSubjectName}
-                                onChange={(event) => {
-                                    setNewSubjectName(
-                                        event.target.value
-                                    )
-                                }}
-                                autoFocus
-                                required
-                            />
-
-                            <div
-                                className={
-                                    'create-subject-actions'
-                                }
+                            <button
+                                type="submit"
+                                disabled={isCreating}
                             >
-                                <button
-                                    type="button"
-                                    className={
-                                        'secondary-button'
-                                    }
-                                    onClick={
-                                        closeSubjectForm
-                                    }
-                                >
-                                    Cancel
-                                </button>
-
-                                <button
-                                    type="submit"
-                                    disabled={isCreating}
-                                >
-                                    {isCreating
-                                        ? 'Creating...'
-                                        : 'Create star'}
-                                </button>
-                            </div>
-                        </form>
-                    )}
-
-
-                {subjects.length === 0 ? (
-                    <section className="empty-orbit">
-                        {!isCreatingSubject ? (
-                            <>
-                                <p>
-                                    You have not created
-                                    a star yet.
-                                </p>
-
-                                <button
-                                    type="button"
-                                    onClick={() => {
-                                        setIsCreatingSubject(
-                                            true
-                                        )
-                                    }}
-                                >
-                                    Create your first subject
-                                </button>
-                            </>
-                        ) : (
-                            <form
-                                className={
-                                    'create-subject-form'
-                                }
-                                onSubmit={
-                                    handleCreateSubject
-                                }
-                            >
-                                <label
-                                    htmlFor={
-                                        'new-subject-name'
-                                    }
-                                >
-                                    Name your first star
-                                </label>
-
-                                <input
-                                    id="new-subject-name"
-                                    type="text"
-                                    placeholder="CPSC 213"
-                                    value={newSubjectName}
-                                    onChange={(event) => {
-                                        setNewSubjectName(
-                                            event.target.value
-                                        )
-                                    }}
-                                    autoFocus
-                                    required
-                                />
-
-                                <div
-                                    className={
-                                        'create-subject-actions'
-                                    }
-                                >
-                                    <button
-                                        type="button"
-                                        className={
-                                            'secondary-button'
-                                        }
-                                        onClick={
-                                            closeSubjectForm
-                                        }
-                                    >
-                                        Cancel
-                                    </button>
-
-                                    <button
-                                        type="submit"
-                                        disabled={isCreating}
-                                    >
-                                        {isCreating
-                                            ? 'Creating...'
-                                            : 'Create star'}
-                                    </button>
-                                </div>
-                            </form>
-                        )}
-                    </section>
-                ) : (
-                    <section className="current-world">
-                        <div className="planet-scene">
-                            <img
-                                src="../../public/4158376800-cropped.gif"
-                                alt="Current planet"
-                                className="planet-placeholder-image"
-                            />
+                                {isCreating ? 'Creating...' : 'Create star'}
+                            </button>
                         </div>
+                    </form>)}
+                </section>) : (<section className="current-world">
+                    <div className="planet-scene">
+                        <img
+                            src="../../public/4158376800-cropped.gif"
+                            alt="Current planet"
+                            className="planet-placeholder-image"
+                        />
+                    </div>
 
-                        <div className="world-details">
-                            <p className="world-label">
-                                CURRENT WORLD
-                            </p>
+                    <div className="world-details">
+                        <p className="world-label">
+                            CURRENT WORLD
+                        </p>
 
-                            <h1>
-                                {planet?.name ||
-                                    'Unknown World'}
-                            </h1>
+                        <h1>
+                            {planet?.name || 'Unknown World'}
+                        </h1>
 
-                            <p className="world-stage">
-                                {planet?.stage ||
-                                    'BARREN'}
-                            </p>
+                        <p className="world-stage">
+                            {planet?.stage || 'BARREN'}
+                        </p>
 
+                        {/*<p className="world-percentage">*/}
+                        {/*    {Math.round(planet?.progressPercentage ?? 0)}% evolved*/}
+                        {/*</p>*/}
+
+                        <div
+                            className="world-progress"
+                        >
                             <div
-                                className="world-progress"
+                                className={'progress-header'}
                             >
-                                <div
-                                    className={
-                                        'progress-header'
-                                    }
-                                >
                   <span>
-                    {planet?.focusMinutes ??
-                        0}{' '}
-                      minutes
-                  </span>
-
-                                    <span>
-                    600 minutes
-                  </span>
-                                </div>
-
-                                <div
-                                    className={
-                                        'progress-track'
-                                    }
-                                >
-                                    <div
-                                        className={
-                                            'progress-fill'
-                                        }
-                                        style={{
-                                            width: `${
-                                                Math.min(
-                                                    (
-                                                        (
-                                                            planet
-                                                                ?.focusMinutes ??
-                                                            0
-                                                        ) /
-                                                        600
-                                                    ) * 100,
-                                                    100
-                                                )
-                                            }%`
-                                        }}
-                                    />
-                                </div>
+                    {planet?.accumulatedFocusMinutes ?? 0} minutes
+                    </span>
+                                <span>
+                        {planet?.requiredFocusMinutes ?? 600} minutes
+                                    </span>
                             </div>
 
-                            {!isFocusing ? (
+                            <div
+                                className={'progress-track'}
+                            >
+                                <div
+                                    className={'progress-fill'}
+                                    style={{
+                                        width: `${Math.min(planet?.progressPercentage ?? 0, 100)}%`
+                                    }}
+                                />
+                            </div>
+                        </div>
+
+                        {!isFocusing ? (<button
+                            type="button"
+                            className={'begin-focus-button'}
+                            onClick={handleBeginFocus}
+                            disabled={!planet}
+                        >
+                            {planet?.accumulatedFocusMinutes > 1 ? 'RESUME ORBIT' : 'BEGIN ORBIT'}
+                        </button>) : (<div
+                            className={'focus-session'}
+                        >
+                            <p
+                                className={'focus-timer'}
+                            >
+                                {formatTime(elapsedSeconds)}
+                            </p>
+
+                            <p
+                                className={'focus-status'}
+                            >
+                                {isPaused ? 'ORBIT PAUSED' : 'MISSION IN PROGRESS'}
+                            </p>
+
+                            <div
+                                className={'focus-actions'}
+                            >
                                 <button
                                     type="button"
-                                    className={
-                                        'begin-focus-button'
-                                    }
-                                    onClick={
-                                        handleBeginFocus
-                                    }
-                                    disabled={!planet}
+                                    className="pause-focus-button"
+                                    onClick={handleTogglePause}
+                                    disabled={isSavingSession}
                                 >
-                                    Begin orbit
+                                    {isPaused ? 'Resume' : 'Pause'}
                                 </button>
-                            ) : (
-                                <div
-                                    className={
-                                        'focus-session'
-                                    }
+
+                                <button
+                                    type="button"
+                                    className="end-focus-button"
+                                    onClick={handleEndFocus}
+                                    disabled={isSavingSession}
                                 >
-                                    <p
-                                        className={
-                                            'focus-timer'
-                                        }
-                                    >
-                                        {formatTime(
-                                            elapsedSeconds
-                                        )}
-                                    </p>
-
-                                    <p
-                                        className={
-                                            'focus-status'
-                                        }
-                                    >
-                                        {isPaused
-                                            ? 'ORBIT PAUSED'
-                                            : 'MISSION IN PROGRESS'}
-                                    </p>
-
-                                    <div
-                                        className={
-                                            'focus-actions'
-                                        }
-                                    >
-                                        <button
-                                            type="button"
-                                            className={
-                                                'pause-focus-button'
-                                            }
-                                            onClick={
-                                                handleTogglePause
-                                            }
-                                        >
-                                            {isPaused
-                                                ? 'Resume'
-                                                : 'Pause'}
-                                        </button>
-
-                                        <button
-                                            type="button"
-                                            className={
-                                                'end-focus-button'
-                                            }
-                                            onClick={
-                                                handleEndFocus
-                                            }
-                                        >
-                                            End mission
-                                        </button>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    </section>
-                )}
+                                    {isSavingSession ? 'Saving mission...' : 'End mission'}
+                                </button>
+                            </div>
+                        </div>)}
+                    </div>
+                </section>)}
             </main>
         </div>
     )
