@@ -1,0 +1,594 @@
+.galaxy-page {
+    min-height: 100vh;
+
+    color: #f7f4ff;
+
+    background: radial-gradient(
+            circle at 50% 28%,
+            rgba(92, 76, 145, 0.24),
+            transparent 38%
+    ),
+    #080711;
+}
+
+
+.galaxy-main {
+    min-height: calc(100vh - 80px);
+    padding: 56px 48px 96px;
+
+    box-sizing: border-box;
+}
+
+
+.galaxy-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin-bottom: 52px;
+
+    text-align: center;
+}
+
+
+.galaxy-eyebrow {
+    margin: 0 0 14px;
+
+    color: rgba(255, 255, 255, 0.55);
+
+    font-family: "Better VCR", monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+}
+
+.galaxy-summary {
+    margin-top: 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    color: rgba(255, 255, 255, 0.5);
+
+    font-family: "Better VCR", monospace;
+    font-size: 0.66rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+
+.star-system-list {
+    width: min(1100px, 100%);
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+    gap: 72px;
+}
+
+
+.star-system {
+    width: min(1000px, 100%);
+    margin: 0 auto;
+}
+
+
+.star-system-header {
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+
+.star-system-label {
+    margin: 0 0 9px;
+
+    color: rgba(255, 255, 255, 0.48);
+
+    font-family: "Better VCR", monospace;
+    font-size: 0.64rem;
+    letter-spacing: 0.16em;
+}
+
+
+.star-system-header h2 {
+    margin: 0;
+
+    font-family: "Better VCR", monospace;
+    font-size: clamp(1.6rem, 4vw, 2.5rem);
+    font-weight: 400;
+}
+
+
+.star-system-count {
+    margin: 0 0 5px;
+
+    color: rgba(255, 255, 255, 0.5);
+
+    font-family: "Better VCR", monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+}
+
+
+.planet-carousel {
+    min-height: 430px;
+
+    position: relative;
+
+    display: grid;
+    grid-template-columns: 60px 1fr 60px;
+    align-items: center;
+
+    overflow: hidden;
+
+    background: radial-gradient(
+            circle at 50% 48%,
+            rgba(146, 118, 255, 0.16),
+            transparent 38%
+    ),
+    rgba(255, 255, 255, 0.025);
+
+    border: 1px solid rgba(255, 255, 255, 0.11);
+
+    border-radius: 24px;
+
+    perspective: 1000px;
+}
+
+
+.carousel-control-left {
+    grid-column: 1;
+    justify-self: center;
+}
+
+
+.carousel-stage {
+    grid-column: 2;
+
+    width: 100%;
+    height: 390px;
+
+    position: relative;
+
+    transform-style: preserve-3d;
+}
+
+
+.carousel-control-right {
+    grid-column: 3;
+    justify-self: center;
+}
+
+
+.carousel-card {
+    width: 300px;
+    height: 330px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    display: block;
+
+    overflow: visible;
+
+    color: inherit;
+    background: transparent;
+
+    border: none;
+    border-radius: 0;
+
+    text-decoration: none;
+
+    transform-style: preserve-3d;
+
+    transition: transform 420ms ease,
+    opacity 420ms ease,
+    filter 420ms ease;
+}
+
+
+.carousel-card.active {
+    z-index: 4;
+
+    opacity: 1;
+
+    transform: translate(-50%, -50%) translateZ(80px) scale(1.08);
+
+    cursor: pointer;
+}
+
+
+.carousel-card.active:hover {
+    transform: translate(-50%, -50%) translateZ(135px) scale(1.04);
+}
+
+.carousel-card.previous {
+    z-index: 1;
+    opacity: 0.42;
+
+    transform: translate(-50%, -50%) translateX(-185px) translateZ(-180px) rotateY(42deg) scale(0.72);
+
+    filter: brightness(0.58);
+}
+
+.carousel-card.next {
+    z-index: 1;
+    opacity: 0.42;
+
+    transform: translate(-50%, -50%) translateX(185px) translateZ(-180px) rotateY(-42deg) scale(0.72);
+
+    filter: brightness(0.58);
+}
+
+.carousel-card.previous,
+.carousel-card.next {
+    padding: 0;
+
+    font: inherit;
+
+    background: transparent;
+    border: none;
+
+    cursor: pointer;
+}
+
+.carousel-card.hidden {
+    z-index: 1;
+
+    opacity: 0;
+
+    transform: translate(-50%, -50%) translateZ(-250px) scale(0.55);
+
+    pointer-events: none;
+}
+
+.carousel-card.previous:hover {
+    opacity: 0.78;
+
+    transform: translate(-50%, -50%) translateX(-235px) translateZ(-55px) rotateY(34deg) scale(0.8);
+
+    filter: brightness(0.8);
+}
+
+
+.carousel-card.next:hover {
+    opacity: 0.78;
+
+    transform: translate(-50%, -50%) translateX(235px) translateZ(-55px) rotateY(-34deg) scale(0.8);
+
+    filter: brightness(0.8);
+}
+
+.carousel-card-content {
+    width: 100%;
+    height: 100%;
+
+    position: relative;
+
+    display: grid;
+    place-items: center;
+}
+
+
+.carousel-card-content::after {
+    display: none;
+}
+
+
+.carousel-planet-glow {
+    width: 230px;
+    height: 230px;
+
+    position: absolute;
+
+    background: rgba(146, 118, 255, 0.18);
+
+    border-radius: 50%;
+
+    filter: blur(38px);
+}
+
+
+.carousel-card img {
+    width: 240px;
+    height: 240px;
+
+    position: relative;
+    z-index: 1;
+
+    object-fit: contain;
+
+    filter: drop-shadow(
+            0 0 30px rgba(160, 130, 255, 0.38)
+    );
+}
+
+
+.carousel-control {
+    width: 42px;
+    height: 42px;
+
+    position: relative;
+    z-index: 5;
+
+    display: grid;
+    place-items: center;
+
+    padding: 0;
+
+    color: #f7f4ff;
+    background: rgba(255, 255, 255, 0.055);
+
+    border: 1px solid rgba(255, 255, 255, 0.16);
+
+    border-radius: 50%;
+
+    font-family: "Better VCR", monospace;
+    font-size: 1rem;
+
+    cursor: pointer;
+
+    transition: background 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+
+.carousel-control:hover {
+    transform: scale(1.06);
+
+    background: rgba(198, 180, 255, 0.12);
+
+    border-color: rgba(198, 180, 255, 0.45);
+}
+
+
+.carousel-details {
+    width: min(520px, 100%);
+    margin: 26px auto 0;
+
+    text-align: center;
+}
+
+
+.carousel-status,
+.carousel-stage-label {
+    margin: 0;
+
+    font-family: "Better VCR", monospace;
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+}
+
+
+.carousel-status {
+    color: rgba(255, 255, 255, 0.48);
+}
+
+
+.carousel-details h3 {
+    margin: 12px 0 10px;
+
+    font-family: "Better VCR", monospace;
+    font-size: clamp(1.5rem, 4vw, 2.25rem);
+    font-weight: 400;
+}
+
+
+.carousel-stage-label {
+    color: #c6b4ff;
+}
+
+
+.carousel-progress-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+
+    margin-top: 25px;
+    margin-bottom: 10px;
+
+    color: rgba(255, 255, 255, 0.62);
+
+    font-size: 0.9rem;
+}
+
+
+.carousel-progress-track {
+    width: 100%;
+    height: 7px;
+
+    overflow: hidden;
+
+    background: rgba(255, 255, 255, 0.12);
+
+    border-radius: 999px;
+}
+
+
+.carousel-progress-fill {
+    height: 100%;
+
+    background: #c6b4ff;
+    border-radius: inherit;
+
+    box-shadow: 0 0 14px rgba(198, 180, 255, 0.65);
+
+    transition: width 300ms ease;
+}
+
+
+.carousel-hint {
+    margin: 15px 0 0;
+
+    color: rgba(255, 255, 255, 0.42);
+
+    font-size: 0.84rem;
+}
+
+
+.galaxy-loading {
+    margin: 80px auto;
+
+    color: rgba(255, 255, 255, 0.6);
+
+    font-family: "Better VCR", monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-align: center;
+}
+
+
+.galaxy-error {
+    width: min(560px, 100%);
+    margin: 0 auto 32px;
+    padding: 14px 18px;
+
+    box-sizing: border-box;
+
+    color: #ffd7df;
+    background: rgba(120, 35, 58, 0.22);
+
+    border: 1px solid rgba(255, 145, 170, 0.35);
+
+    border-radius: 12px;
+
+    text-align: center;
+}
+
+
+.empty-galaxy,
+.empty-star-system {
+    box-sizing: border-box;
+
+    color: rgba(255, 255, 255, 0.72);
+    background: rgba(255, 255, 255, 0.035);
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+
+    border-radius: 20px;
+
+    text-align: center;
+}
+
+
+.empty-galaxy {
+    width: min(560px, 100%);
+    margin: 72px auto 0;
+    padding: 48px 32px;
+
+    font-family: "Apple Garamond",
+    Georgia,
+    serif;
+
+    font-size: 1.35rem;
+}
+
+
+.empty-star-system {
+    margin: 0;
+    padding: 40px;
+}
+
+
+.empty-galaxy p,
+.empty-star-system p {
+    margin: 0;
+}
+
+
+.empty-galaxy-link {
+    display: inline-block;
+
+    margin-top: 24px;
+    padding: 13px 21px;
+
+    color: #0d0a18;
+    background: #eee9ff;
+
+    border-radius: 999px;
+
+    font-family: "Better VCR", monospace;
+    font-size: 0.7rem;
+    text-decoration: none;
+}
+
+
+.star-system-identity {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+@media (max-width: 760px) {
+    .galaxy-main {
+        padding: 40px 20px 64px;
+    }
+
+    .galaxy-header {
+        margin-bottom: 38px;
+    }
+
+    .star-system-list {
+        gap: 52px;
+    }
+
+    .star-system-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .planet-carousel {
+        min-height: 360px;
+
+        grid-template-columns:
+            46px 1fr 46px;
+    }
+
+    .carousel-stage {
+        height: 330px;
+    }
+
+    .carousel-card {
+        width: 220px;
+        height: 280px;
+    }
+
+    .carousel-card img {
+        width: 185px;
+        height: 185px;
+    }
+
+    .carousel-planet-glow {
+        width: 180px;
+        height: 180px;
+    }
+
+    .carousel-card.previous {
+        transform: translate(-50%, -50%) translateX(-155px) translateZ(-100px) rotateY(40deg) scale(0.68);
+    }
+
+    .carousel-card.next {
+        transform: translate(-50%, -50%) translateX(155px) translateZ(-100px) rotateY(-40deg) scale(0.68);
+    }
+
+    .carousel-control {
+        width: 36px;
+        height: 36px;
+    }
+
+    .empty-galaxy {
+        margin-top: 40px;
+        padding: 36px 22px;
+    }
+}
