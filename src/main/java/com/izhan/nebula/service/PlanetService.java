@@ -64,5 +64,41 @@ public class PlanetService {
         return planetRepository
                 .findBySubjectOrderByCreatedAtAsc(subject);
     }
+
+    @Transactional(readOnly = true)
+    public Planet getPlanet(Long planetId, User user) {
+        return planetRepository
+                .findByIdAndSubjectUser(
+                        planetId,
+                        user
+                )
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Planet not found: " + planetId
+                        )
+                );
+    }
+
+    @Transactional
+    public Planet renamePlanet(
+            Long planetId,
+            String newName,
+            User user) {
+
+        Planet planet = planetRepository
+                .findByIdAndSubjectUser(
+                        planetId,
+                        user
+                )
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Planet not found: " + planetId
+                        )
+                );
+
+        planet.rename(newName);
+
+        return planetRepository.save(planet);
+    }
 }
 

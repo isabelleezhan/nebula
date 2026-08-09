@@ -101,4 +101,28 @@ public class SubjectService {
                 .current()
                 .nextLong();
     }
+
+    @Transactional
+    public Subject renameSubject(
+            Long subjectId,
+            String newName,
+            User user) {
+
+        Subject subject =
+                subjectRepository
+                        .findByIdAndUser(
+                                subjectId,
+                                user
+                        )
+                        .orElseThrow(() ->
+                                new ResourceNotFoundException(
+                                        "Subject not found: "
+                                                + subjectId
+                                )
+                        );
+
+        subject.rename(newName);
+
+        return subjectRepository.save(subject);
+    }
 }

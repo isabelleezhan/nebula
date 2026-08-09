@@ -2,6 +2,7 @@ package com.izhan.nebula.controller;
 
 import com.izhan.nebula.dto.CreateSubjectRequest;
 import com.izhan.nebula.dto.FocusSessionResponse;
+import com.izhan.nebula.dto.RenameSubjectRequest;
 import com.izhan.nebula.dto.SubjectResponse;
 import com.izhan.nebula.model.Subject;
 import com.izhan.nebula.model.User;
@@ -98,5 +99,28 @@ public class SubjectController {
                 .stream()
                 .map(FocusSessionResponse::from)
                 .toList();
+    }
+
+    @PatchMapping("/{subjectId}")
+    public SubjectResponse renameSubject(
+            @PathVariable Long subjectId,
+            @Valid
+            @RequestBody
+            RenameSubjectRequest request,
+            Principal principal) {
+
+        User user =
+                userService.getByEmail(
+                        principal.getName()
+                );
+
+        Subject subject =
+                subjectService.renameSubject(
+                        subjectId,
+                        request.getName(),
+                        user
+                );
+
+        return SubjectResponse.from(subject);
     }
 }

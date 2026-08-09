@@ -4,7 +4,7 @@ import AppNav from '../components/AppNav'
 
 import {createSubject, getSubjects} from '../api/subjectApi.js'
 
-import {getActivePlanet} from '../api/planetApi.js'
+import {getActivePlanet, renamePlanet} from '../api/planetApi.js'
 import {recordFocusSession} from '../api/focusSessionApi'
 import '../styles/OrbitPage.css'
 
@@ -29,6 +29,10 @@ function OrbitPage() {
     const [sessionStartedAt, setSessionStartedAt] = useState(null)
     const [isSavingSession, setIsSavingSession] = useState(false)
 
+    const [isRenamingPlanet, setIsRenamingPlanet] =
+        useState(false)
+    const [planetName, setPlanetName] =
+        useState('')
 
     useEffect(() => {
         async function loadSubjects() {
@@ -66,6 +70,7 @@ function OrbitPage() {
                 const activePlanet = await getActivePlanet(selectedSubjectId)
 
                 setPlanet(activePlanet)
+                setPlanetName(activePlanet.name)
             } catch (error) {
                 setError(error.message)
                 setPlanet(null)
@@ -148,6 +153,42 @@ function OrbitPage() {
         }
     }
 
+    async function handleRenamePlanet(event) {
+        event.preventDefault()
+
+        if (!planet) {
+            setError(
+                'Could not determine the current planet.'
+            )
+            return
+        }
+
+        const trimmedName =
+            planetName.trim()
+
+        if (!trimmedName) {
+            setError(
+                'Planet name cannot be blank.'
+            )
+            return
+        }
+
+        try {
+            setError('')
+
+            const updatedPlanet =
+                await renamePlanet(
+                    planet.id,
+                    trimmedName
+                )
+
+            setPlanet(updatedPlanet)
+            setPlanetName(updatedPlanet.name)
+            setIsRenamingPlanet(false)
+        } catch (error) {
+            setError(error.message)
+        }
+    }
 
     function formatTime(totalSeconds) {
         const hours = Math.floor(totalSeconds / 3600)
@@ -217,6 +258,7 @@ function OrbitPage() {
             const refreshedPlanet = await getActivePlanet(selectedSubjectId)
 
             setPlanet(refreshedPlanet)
+            setPlanetName(refreshedPlanet.name)
 
             setIsFocusing(false)
             setIsPaused(false)
@@ -400,17 +442,53 @@ function OrbitPage() {
                             CURRENT WORLD
                         </p>
 
-                        <h1>
-                            {planet?.name || 'Unknown World'}
-                        </h1>
+
+                        {isRenamingPlanet ? (
+                            <form
+                                className="orbit-planet-name-form"
+                                onSubmit={handleRenamePlanet}
+                            >
+                                <input
+                                    type="text"
+                                    value={planetName}
+                                    onChange={(event) => {
+                                        setPlanetName(
+                                            event.target.value
+                                        )
+                                    }}
+                                    autoFocus
+                                    onKeyDown={(event) => {
+                                        if (event.key === 'Escape') {
+                                            setPlanetName(
+                                                planet.name
+                                            )
+
+                                            if (planet) {
+                                                setPlanetName(planet.name)
+                                            }
+
+                                            setIsRenamingPlanet(false)
+                                        }
+                                    }}
+                                />
+                            </form>
+                        ) : (
+                            <button
+                                type="button"
+                                className="orbit-planet-name-button"
+                                onClick={() => {
+                                    setIsRenamingPlanet(true)
+                                }}
+                                title="Rename planet"
+                            >
+                                {planet?.name || 'Loading world...'}
+                            </button>
+                        )}
+
 
                         <p className="world-stage">
                             {planet?.stage || 'BARREN'}
                         </p>
-
-                        {/*<p className="world-percentage">*/}
-                        {/*    {Math.round(planet?.progressPercentage ?? 0)}% evolved*/}
-                        {/*</p>*/}
 
                         <div
                             className="world-progress"

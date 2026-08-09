@@ -54,3 +54,38 @@ export async function createSubject(name) {
 
     return data
 }
+
+export async function renameSubject(
+    subjectId,
+    name
+) {
+    const response = await fetch(
+        `/api/subjects/${subjectId}`,
+        {
+            method: 'PATCH',
+
+            headers: {
+                'Content-Type':
+                    'application/json'
+            },
+
+            credentials: 'include',
+
+            body: JSON.stringify({
+                name
+            })
+        }
+    )
+
+    const data =
+        await readResponseBody(response)
+
+    if (!response.ok) {
+        throw new Error(
+            data?.message ||
+            'Could not rename subject.'
+        )
+    }
+
+    return data
+}

@@ -63,6 +63,16 @@ public class Planet {
         this.createdAt = LocalDateTime.now();
     }
 
+    public void rename(String newName) {
+        if (newName == null || newName.isBlank()) {
+            throw new IllegalArgumentException(
+                    "Planet name cannot be blank."
+            );
+        }
+
+        this.name = newName.trim();
+    }
+
     public void addFocusMinutes(int minutes) {
         if (minutes <= 0) {
             throw new IllegalArgumentException(

@@ -2,6 +2,7 @@
     min-height: 100vh;
 
     color: #f7f4ff;
+
     background: radial-gradient(
             circle at 50% 35%,
             rgba(92, 76, 145, 0.28),
@@ -10,6 +11,7 @@
     #080711;
 }
 
+
 .orbit-main {
     min-height: calc(100vh - 80px);
     padding: 56px 48px 80px;
@@ -17,12 +19,14 @@
     box-sizing: border-box;
 }
 
+
 .orbit-header {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 14px;
 }
+
 
 .orbit-eyebrow,
 .world-label,
@@ -34,10 +38,12 @@
     letter-spacing: 0.16em;
 }
 
+
 .orbit-eyebrow,
 .world-label {
     color: rgba(255, 255, 255, 0.55);
 }
+
 
 .subject-selector {
     display: flex;
@@ -56,6 +62,7 @@
     cursor: pointer;
 }
 
+
 .subject-selector:focus {
     outline: none;
 
@@ -64,10 +71,12 @@
     box-shadow: 0 0 0 3px rgba(198, 180, 255, 0.12);
 }
 
+
 .subject-selector option {
     color: #111;
     background: white;
 }
+
 
 .current-world {
     width: min(980px, 100%);
@@ -79,6 +88,7 @@
     gap: 80px;
 }
 
+
 .planet-scene {
     min-height: 480px;
 
@@ -88,6 +98,7 @@
     place-items: center;
 }
 
+
 .planet-glow {
     width: 360px;
     height: 360px;
@@ -95,12 +106,16 @@
     position: absolute;
 
     background: rgba(146, 118, 255, 0.18);
+
     border-radius: 50%;
+
     filter: blur(45px);
 }
 
+
 .planet-placeholder-image {
     width: min(400px, 70vw);
+
     aspect-ratio: 1;
 
     object-fit: contain;
@@ -113,6 +128,7 @@
     );
 }
 
+
 .planet-moon {
     width: 26px;
     height: 26px;
@@ -122,10 +138,12 @@
     right: 65px;
 
     background: #dad2ef;
+
     border-radius: 50%;
 
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.28);
 }
+
 
 .world-details {
     display: flex;
@@ -133,22 +151,17 @@
     align-items: flex-start;
 }
 
-.world-details h1 {
-    margin: 14px 0 10px;
-
-    font-family: "Better VCR", monospace;
-    font-size: clamp(2.2rem, 5vw, 4rem);
-    font-weight: 400;
-}
 
 .world-stage {
     color: #c6b4ff;
 }
 
+
 .world-progress {
     width: 100%;
     margin-top: 38px;
 }
+
 
 .progress-header {
     margin-bottom: 10px;
@@ -157,8 +170,10 @@
     justify-content: space-between;
 
     color: rgba(255, 255, 255, 0.62);
+
     font-size: 0.95rem;
 }
+
 
 .progress-track {
     width: 100%;
@@ -167,18 +182,92 @@
     overflow: hidden;
 
     background: rgba(255, 255, 255, 0.12);
+
     border-radius: 999px;
 }
+
 
 .progress-fill {
     width: 63%;
     height: 100%;
 
     background: #c6b4ff;
+
     border-radius: inherit;
 
     box-shadow: 0 0 14px rgba(198, 180, 255, 0.65);
 }
+
+
+.orbit-planet-name-button {
+    margin: 14px 0 10px;
+    padding: 0;
+
+    color: #f7f4ff;
+    background: transparent;
+
+    border: none;
+
+    font-family: "Better VCR",
+    monospace;
+
+    font-size: clamp(2.2rem, 5vw, 4rem);
+
+    font-weight: 400;
+    line-height: 1.1;
+
+    text-align: left;
+
+    cursor: text;
+
+    transition: text-shadow 160ms ease;
+}
+
+
+.orbit-planet-name-button:hover {
+    text-shadow: 0 0 18px rgba(198, 180, 255, 0.28);
+}
+
+
+.orbit-planet-name-form {
+    width: 100%;
+
+    margin: 14px 0 10px;
+}
+
+
+.orbit-planet-name-form input {
+    width: 100%;
+
+    padding: 0 0 5px;
+
+    box-sizing: border-box;
+
+    color: #f7f4ff;
+    background: transparent;
+
+    border: none;
+
+    border-bottom: 1px solid rgba(198, 180, 255, 0.5);
+
+    font-family: "Better VCR",
+    monospace;
+
+    font-size: clamp(2.2rem, 5vw, 4rem);
+
+    font-weight: 400;
+    line-height: 1.1;
+}
+
+
+.orbit-planet-name-form input:focus {
+    outline: none;
+
+    border-bottom-color: #c6b4ff;
+
+    box-shadow: 0 4px 8px -6px rgba(198, 180, 255, 0.7);
+}
+
 
 .begin-focus-button {
     margin-top: 38px;
@@ -188,9 +277,12 @@
     background: #eee9ff;
 
     border: none;
+
     border-radius: 999px;
 
-    font-family: "Better VCR", monospace;
+    font-family: "Better VCR",
+    monospace;
+
     font-size: 0.78rem;
 
     cursor: pointer;
@@ -199,11 +291,24 @@
     box-shadow 150ms ease;
 }
 
+
 .begin-focus-button:hover {
     transform: translateY(-2px);
 
     box-shadow: 0 8px 28px rgba(198, 180, 255, 0.3);
 }
+
+
+.begin-focus-button:disabled {
+    opacity: 0.5;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    box-shadow: none;
+}
+
 
 .orbit-error {
     width: min(560px, 100%);
@@ -213,16 +318,20 @@
     box-sizing: border-box;
 
     color: #ffd7df;
+
     background: rgba(120, 35, 58, 0.22);
 
     border: 1px solid rgba(255, 145, 170, 0.35);
+
     border-radius: 12px;
 
     text-align: center;
 }
 
+
 .empty-orbit {
     width: min(560px, 100%);
+
     margin: 72px auto 0;
     padding: 48px 32px;
 
@@ -236,11 +345,14 @@
     text-align: center;
 
     background: rgba(255, 255, 255, 0.035);
+
     border: 1px solid rgba(255, 255, 255, 0.12);
+
     border-radius: 20px;
 
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
 }
+
 
 .empty-orbit p {
     margin: 0;
@@ -254,6 +366,7 @@
     font-size: 1.35rem;
 }
 
+
 .empty-orbit button {
     padding: 14px 24px;
 
@@ -261,6 +374,7 @@
     background: #eee9ff;
 
     border: none;
+
     border-radius: 999px;
 
     font-family: "Better VCR",
@@ -274,29 +388,37 @@
     box-shadow 150ms ease;
 }
 
+
 .empty-orbit button:hover {
     transform: translateY(-2px);
 
     box-shadow: 0 8px 28px rgba(198, 180, 255, 0.3);
 }
 
+
 .add-subject-button {
     padding: 0;
 
     color: rgba(255, 255, 255, 0.58);
+
     background: transparent;
+
     border: none;
 
-    font-family: "Better VCR", monospace;
+    font-family: "Better VCR",
+    monospace;
+
     font-size: 0.68rem;
     letter-spacing: 0.08em;
 
     cursor: pointer;
 }
 
+
 .add-subject-button:hover {
     color: white;
 }
+
 
 .create-subject-form {
     width: min(420px, 100%);
@@ -306,6 +428,7 @@
     gap: 16px;
 }
 
+
 .create-subject-panel {
     margin: 30px auto 0;
     padding: 28px;
@@ -313,33 +436,46 @@
     box-sizing: border-box;
 
     background: rgba(255, 255, 255, 0.045);
+
     border: 1px solid rgba(255, 255, 255, 0.13);
+
     border-radius: 18px;
 }
+
 
 .create-subject-form label {
     color: rgba(255, 255, 255, 0.75);
 
-    font-family: "Better VCR", monospace;
+    font-family: "Better VCR",
+    monospace;
+
     font-size: 0.72rem;
     letter-spacing: 0.08em;
 }
 
+
 .create-subject-form input {
     width: 100%;
+
     padding: 14px 16px;
 
     box-sizing: border-box;
 
     color: white;
+
     background: rgba(255, 255, 255, 0.06);
 
     border: 1px solid rgba(255, 255, 255, 0.18);
+
     border-radius: 10px;
 
-    font-family: "Apple Garamond", Georgia, serif;
+    font-family: "Apple Garamond",
+    Georgia,
+    serif;
+
     font-size: 1.1rem;
 }
+
 
 .create-subject-form input:focus {
     outline: none;
@@ -349,47 +485,51 @@
     box-shadow: 0 0 0 3px rgba(198, 180, 255, 0.12);
 }
 
+
 .create-subject-actions {
     display: flex;
     justify-content: flex-end;
     gap: 12px;
 }
 
+
 .create-subject-actions button {
     padding: 11px 17px;
 
     border: none;
+
     border-radius: 999px;
 
-    font-family: "Better VCR", monospace;
+    font-family: "Better VCR",
+    monospace;
+
     font-size: 0.68rem;
 
     cursor: pointer;
 }
+
 
 .create-subject-actions button[type="submit"] {
     color: #0d0a18;
     background: #eee9ff;
 }
 
+
 .create-subject-actions .secondary-button {
     color: rgba(255, 255, 255, 0.7);
+
     background: transparent;
 
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+
 .create-subject-actions button:disabled {
     opacity: 0.55;
+
     cursor: not-allowed;
 }
 
-.begin-focus-button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-}
 
 .focus-session {
     width: 100%;
@@ -400,6 +540,7 @@
     align-items: flex-start;
 }
 
+
 .focus-timer {
     margin: 0;
 
@@ -409,8 +550,10 @@
     monospace;
 
     font-size: clamp(2.2rem, 6vw, 4rem);
+
     letter-spacing: 0.06em;
 }
+
 
 .focus-status {
     margin: 12px 0 0;
@@ -424,12 +567,14 @@
     letter-spacing: 0.12em;
 }
 
+
 .focus-actions {
     margin-top: 24px;
 
     display: flex;
     gap: 12px;
 }
+
 
 .focus-actions button {
     padding: 13px 21px;
@@ -444,75 +589,111 @@
     cursor: pointer;
 }
 
+
 .pause-focus-button {
     color: #0d0a18;
     background: #eee9ff;
+
     border: none;
 }
 
+
 .end-focus-button {
     color: rgba(255, 255, 255, 0.82);
+
     background: transparent;
 
     border: 1px solid rgba(255, 255, 255, 0.24);
 }
 
+
 .pause-focus-button:hover {
     box-shadow: 0 8px 28px rgba(198, 180, 255, 0.25);
 }
 
+
 .end-focus-button:hover {
     background: rgba(255, 255, 255, 0.07);
 }
+
 
 @media (max-width: 760px) {
     .orbit-main {
         padding: 40px 20px 64px;
     }
 
+
     .current-world {
         margin-top: 24px;
 
         grid-template-columns: 1fr;
+
         gap: 10px;
     }
+
 
     .planet-scene {
         min-height: 390px;
     }
+
 
     .planet-moon {
         top: 65px;
         right: 18%;
     }
 
+
     .world-details {
         align-items: center;
+
         text-align: center;
     }
+
+
+    .orbit-planet-name-button {
+        text-align: center;
+    }
+
+
+    .orbit-planet-name-form {
+        max-width: 420px;
+    }
+
+
+    .orbit-planet-name-form input {
+        text-align: center;
+    }
+
 
     .world-progress {
         max-width: 420px;
     }
+
 
     .orbit-error,
     .empty-orbit {
         width: 100%;
     }
 
+
     .empty-orbit {
         margin-top: 40px;
+
         padding: 36px 22px;
     }
 
+
     .subject-selector {
         width: 100%;
+
         max-width: 320px;
     }
+
 
     .focus-session {
         align-items: center;
     }
+
 
     .focus-actions {
         justify-content: center;
