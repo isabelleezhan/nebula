@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/focus-sessions")
@@ -49,5 +50,24 @@ public class FocusSessionController {
                 );
 
         return FocusSessionResponse.from(session);
+    }
+
+    @GetMapping("/planet/{planetId}")
+    public List<FocusSessionResponse> getSessionsForPlanet(
+            @PathVariable Long planetId,
+            Principal principal) {
+
+        User user = userService.getByEmail(
+                principal.getName()
+        );
+
+        return focusSessionService
+                .getSessionsForPlanet(
+                        planetId,
+                        user
+                )
+                .stream()
+                .map(FocusSessionResponse::from)
+                .toList();
     }
 }

@@ -36,6 +36,29 @@ export async function recordFocusSession({
     return data
 }
 
+export async function getSessionsForPlanet(
+    planetId
+) {
+    const response = await fetch(
+        `/api/focus-sessions/planet/${planetId}`,
+        {
+            method: 'GET',
+            credentials: 'include'
+        }
+    )
+
+    const data = await readResponseBody(response)
+
+    if (!response.ok) {
+        throw new Error(
+            data?.message ||
+            'Could not load focus sessions.'
+        )
+    }
+
+    return data
+}
+
 
 async function readResponseBody(response) {
     const contentType =
