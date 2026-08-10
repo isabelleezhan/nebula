@@ -89,3 +89,25 @@ export async function renameSubject(
 
     return data
 }
+
+export async function getSubject(subjectId) {
+    const response = await fetch(
+        `/api/subjects/${subjectId}`,
+        {
+            method: 'GET',
+            credentials: 'include'
+        }
+    )
+
+    const data =
+        await readResponseBody(response)
+
+    if (!response.ok) {
+        throw new Error(
+            data?.message ||
+            'Could not load subject.'
+        )
+    }
+
+    return data
+}

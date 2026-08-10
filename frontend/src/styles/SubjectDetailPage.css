@@ -1,0 +1,336 @@
+.subject-detail-page {
+    min-height: 100vh;
+    color: #f7f4ff;
+    background: radial-gradient(
+            circle at 50% 20%,
+            rgba(92, 76, 145, 0.2),
+            transparent 38%
+    ),
+    #080711;
+}
+
+.subject-detail-main {
+    padding: 50px 8vw 80px;
+}
+
+
+.subject-detail-label {
+    margin: 0 0 10px;
+
+    color: rgba(198, 180, 255, 0.65);
+
+    font-family: "Better VCR",
+    monospace;
+
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+}
+
+
+.subject-detail-header > h1 {
+    margin: 0;
+
+    font-family: "Better VCR",
+    monospace;
+
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+
+    font-weight: 400;
+}
+
+
+.subject-worlds {
+    max-width: 1100px;
+
+    margin: 70px 0 0;
+}
+
+
+.subject-world-strip {
+    display: flex;
+    align-items: flex-start;
+
+    overflow-x: auto;
+
+    padding: 28px 0 34px;
+
+    scrollbar-width: thin;
+}
+
+.subject-world-node {
+    position: relative;
+    z-index: 2;
+
+    width: 88px;
+    height: 88px;
+
+    margin: 0 auto 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    filter: drop-shadow(
+            0 0 20px rgba(198, 180, 255, 0.28)
+    );
+}
+
+
+.subject-world-node .pixel-planet {
+    width: 100%;
+    height: 100%;
+}
+
+
+.subject-world-line {
+    position: absolute;
+
+    top: 44px;
+    left: calc(50% + 44px);
+
+    width: 62px;
+    height: 1px;
+
+    background: linear-gradient(
+            to right,
+            rgba(198, 180, 255, 0.55),
+            rgba(198, 180, 255, 0.22)
+    );
+
+    box-shadow: 0 0 8px rgba(198, 180, 255, 0.15);
+
+    z-index: 1;
+}
+
+
+.subject-world-name {
+    margin: 0;
+
+    color: #f7f4ff;
+
+    font-family: "Better VCR",
+    monospace;
+
+    font-size: 0.68rem;
+}
+
+
+.subject-world-stage {
+    margin-top: 5px;
+    font-size: 0.5rem;
+
+    color: rgba(247, 244, 255, 0.4);
+
+    font-family: "Better VCR",
+    monospace;
+    letter-spacing: 0.08em;
+}
+
+.subject-world-item {
+    position: relative;
+
+    flex: 0 0 180px;
+
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+
+    transition: transform 160ms ease,
+    opacity 160ms ease;
+}
+
+.subject-world-item:hover {
+    transform: translateY(-4px);
+}
+
+.subject-world-item:hover,
+.subject-world-node {
+    filter: drop-shadow(
+            0 0 28px rgba(198, 180, 255, 0.42)
+    );
+}
+
+.subject-world-item.complete {
+    opacity: 0.62;
+}
+
+.subject-worlds-empty {
+    margin-top: 18px;
+
+    color: rgba(247, 244, 255, 0.4);
+
+    font-family: "Better VCR",
+    monospace;
+
+    font-size: 0.65rem;
+}
+
+.subject-current-world-planet {
+    width: 150px;
+    height: 150px;
+
+    flex: 0 0 150px;
+
+    position: relative;
+
+    filter: drop-shadow(
+            0 0 28px rgba(198, 180, 255, 0.34)
+    );
+}
+
+.subject-current-world-planet .pixel-planet {
+    width: 100%;
+    height: 100%;
+}
+
+/*
+
+ */
+.subject-detail-stats {
+    display: flex;
+    gap: 42px;
+
+    margin-top: 28px;
+}
+
+.subject-detail-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.subject-detail-stat-value {
+    color: #f7f4ff;
+
+    font-family: "Better VCR",
+    monospace;
+
+    font-size: 1.5rem;
+}
+
+.subject-detail-stat-label {
+    color: rgba(247, 244, 255, 0.45);
+
+    font-family: "Better VCR",
+    monospace;
+
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+/**/
+
+.subject-missions {
+    max-width: 1100px;
+    margin: 70px auto 0;
+}
+
+.subject-mission-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.subject-mission-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+
+    padding: 14px 0;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+    color: rgba(247, 244, 255, 0.72);
+
+    font-family: "Better VCR",
+    monospace;
+
+    font-size: 0.72rem;
+}
+
+.subject-missions-empty {
+    color: rgba(247, 244, 255, 0.4);
+}
+
+/**/
+
+.subject-current-world {
+    max-width: 1100px;
+
+    margin: 70px 0;
+}
+
+.subject-current-world-content {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.subject-current-world-content h2 {
+    margin: 0 0 10px;
+
+    font-family: "Better VCR",
+    monospace;
+
+    font-size: clamp(1.5rem, 3vw, 2.3rem);
+
+    font-weight: 400;
+}
+
+.subject-current-world-content p {
+    margin: 5px 0;
+
+    color: rgba(247, 244, 255, 0.5);
+
+    font-family: "Better VCR",
+    monospace;
+
+    font-size: 0.65rem;
+}
+
+/**/
+.subject-detail-back {
+    display: inline-block;
+    margin-bottom: 28px;
+
+    color: rgba(198, 180, 255, 0.72);
+
+    font-family: "Better VCR",
+    monospace;
+
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+
+    text-decoration: none;
+
+    transition: color 160ms ease,
+    text-shadow 160ms ease;
+}
+
+.subject-detail-back:hover {
+    color: #c6b4ff;
+
+    text-shadow: 0 0 12px rgba(198, 180, 255, 0.28);
+}
+
+@media (max-width: 700px) {
+    .subject-detail-main {
+        padding: 30px 24px 60px;
+    }
+
+    .subject-world-item {
+        flex-basis: 145px;
+    }
+
+    .subject-world-node {
+        width: 90px;
+        height: 90px;
+    }
+
+    .subject-world-line {
+        top: 45px;
+        left: calc(50% + 45px);
+
+        width: 55px;
+    }
+}

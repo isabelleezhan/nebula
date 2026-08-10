@@ -73,3 +73,27 @@ async function readResponseBody(response) {
 
     return null
 }
+
+export async function getSessionsForSubject(
+    subjectId
+) {
+    const response = await fetch(
+        `/api/subjects/${subjectId}/sessions`,
+        {
+            method: 'GET',
+            credentials: 'include'
+        }
+    )
+
+    const data =
+        await readResponseBody(response)
+
+    if (!response.ok) {
+        throw new Error(
+            data?.message ||
+            'Could not load subject sessions.'
+        )
+    }
+
+    return data
+}

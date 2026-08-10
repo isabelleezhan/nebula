@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react'
 import {renameSubject} from "../api/subjectApi.js";
+import PixelPlanet from '../components/PixelPlanet'
 import {Link} from 'react-router'
 
 
@@ -216,7 +217,7 @@ function StarSystemCarousel({
                         ✦
                     </div>
 
-                    <div>
+                    <div className="star-system-title-group">
                         <p className="star-system-label">
                             STAR SYSTEM
                         </p>
@@ -257,6 +258,13 @@ function StarSystemCarousel({
                                 {subjectName}
                             </button>
                         )}
+
+                        <Link
+                            to={`/subjects/${subject.id}`}
+                            className="star-system-link"
+                        >
+                            View system
+                        </Link>
                     </div>
                 </div>
 
@@ -430,11 +438,7 @@ function PlanetCard({planet}) {
     return (
         <div className="carousel-card-content">
             <div className="carousel-planet-glow"/>
-
-            <img
-                src="/4158376800-cropped.gif"
-                alt={planet.name}
-            />
+            <PixelPlanet planet={planet}/>
         </div>
     )
 }
