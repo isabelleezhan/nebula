@@ -1,0 +1,567 @@
+.insights-page {
+    min-height: 100vh;
+
+    color: #f7f4ff;
+
+    background: radial-gradient(
+            circle at 50% 28%,
+            rgba(92, 76, 145, 0.24),
+            transparent 38%
+    ),
+    #080711;
+}
+
+
+.insights-main {
+    width: min(1100px, calc(100% - 96px));
+    min-height: calc(100vh - 80px);
+
+    margin: 0 auto;
+    padding: 56px 0 96px;
+
+    box-sizing: border-box;
+}
+
+
+.insights-header {
+    margin-bottom: 42px;
+}
+
+
+.insights-eyebrow {
+    margin: 0 0 14px;
+
+    color: rgba(255, 255, 255, 0.5);
+
+    font-family: "Better VCR", monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+}
+
+
+.insights-header h1 {
+    margin: 0;
+
+    font-family: "Better VCR", monospace;
+    font-size: clamp(2.6rem, 6vw, 4.8rem);
+    font-weight: 400;
+    line-height: 1;
+}
+
+
+.insights-description {
+    max-width: 520px;
+
+    margin: 18px 0 0;
+
+    color: rgba(255, 255, 255, 0.58);
+
+    font-family: "Apple Garamond",
+    Georgia,
+    serif;
+
+    font-size: 1.2rem;
+    line-height: 1.5;
+}
+
+
+/* ---------------- OVERVIEW CARDS ---------------- */
+
+
+.insights-overview {
+    display: grid;
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 18px;
+}
+
+
+.insight-card {
+    min-width: 0;
+
+    padding: 24px;
+
+    background: rgba(255, 255, 255, 0.035);
+
+    border: 1px solid rgba(255, 255, 255, 0.11);
+
+    border-radius: 18px;
+
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.14);
+}
+
+
+.insight-label {
+    margin: 0;
+
+    color: rgba(255, 255, 255, 0.48);
+
+    font-family: "Better VCR", monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+}
+
+
+.insight-value {
+    margin: 18px 0 4px;
+
+    color: #f7f4ff;
+
+    font-family: "Better VCR", monospace;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 400;
+    line-height: 1;
+}
+
+
+.insight-unit {
+    margin: 0;
+
+    color: rgba(255, 255, 255, 0.52);
+
+    font-size: 0.9rem;
+}
+
+
+/* ---------------- HIGHLIGHTS ---------------- */
+
+
+.insights-highlight-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 24px;
+
+    margin-top: 28px;
+}
+
+
+.insight-highlight {
+    padding: 28px;
+
+    background: radial-gradient(
+            circle at 20% 20%,
+            rgba(146, 118, 255, 0.09),
+            transparent 55%
+    ),
+    rgba(255, 255, 255, 0.035);
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+
+    border-radius: 20px;
+}
+
+
+.insight-highlight h2 {
+    margin: 12px 0 8px;
+
+    color: #f7f4ff;
+
+    font-family: "Better VCR",
+    monospace;
+
+    font-size: clamp(1.5rem, 3vw, 2.4rem);
+
+    font-weight: 400;
+}
+
+
+.insight-highlight > p:last-child {
+    margin: 0;
+
+    color: rgba(255, 255, 255, 0.55);
+
+    line-height: 1.4;
+}
+
+
+/* ---------------- GENERAL SECTION ---------------- */
+
+
+.insights-section {
+    margin-top: 48px;
+    padding: 32px;
+
+    background: rgba(255, 255, 255, 0.028);
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    border-radius: 22px;
+
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.16);
+}
+
+
+.insights-section-heading {
+    padding-bottom: 22px;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+
+.insights-section-heading h2 {
+    margin: 10px 0 0;
+
+    font-family: "Better VCR",
+    monospace;
+
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+
+    font-weight: 400;
+}
+
+
+/* ---------------- WEEKLY CHART ---------------- */
+
+
+.weekly-chart {
+    height: 280px;
+
+    display: grid;
+    grid-template-columns:
+        repeat(7, 1fr);
+
+    align-items: end;
+
+    gap: 18px;
+
+    margin-top: 28px;
+}
+
+
+.weekly-chart-column {
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.weekly-chart-value {
+    min-height: 24px;
+
+    margin-bottom: 8px;
+
+    color: rgba(255, 255, 255, 0.55);
+
+    font-size: 0.8rem;
+}
+
+
+.weekly-chart-track {
+    width: 100%;
+    max-width: 48px;
+    height: 210px;
+
+    display: flex;
+    align-items: flex-end;
+
+    overflow: hidden;
+
+    background: rgba(255, 255, 255, 0.07);
+
+    border: 1px solid rgba(255, 255, 255, 0.06);
+
+    border-radius: 999px;
+}
+
+
+.weekly-chart-bar {
+    width: 100%;
+
+    min-height: 0;
+
+    background: linear-gradient(
+            to top,
+            #9e86e7,
+            #c6b4ff
+    );
+
+    border-radius: 999px;
+
+    box-shadow: 0 0 18px rgba(198, 180, 255, 0.45);
+
+    transition: height 500ms ease;
+}
+
+
+.weekly-chart-day {
+    margin: 12px 0 0;
+
+    color: rgba(255, 255, 255, 0.55);
+
+    font-family: "Better VCR",
+    monospace;
+
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+
+    text-transform: uppercase;
+}
+
+.weekly-change {
+    margin: 16px 0 0;
+
+    font-family: "Better VCR",
+    monospace;
+
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+}
+
+
+.weekly-change.positive {
+    color: #bde8c7;
+}
+
+
+.weekly-change.negative {
+    color: #e8b9c3;
+}
+
+
+.weekly-change.neutral {
+    color: rgba(255, 255, 255, 0.45);
+}
+
+
+/* ---------------- SUBJECT BREAKDOWN ---------------- */
+
+
+.subject-focus-list {
+    display: flex;
+    flex-direction: column;
+
+    margin-top: 12px;
+}
+
+
+.subject-focus-row {
+    min-height: 82px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 24px;
+
+    padding: 20px 4px;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+
+.subject-focus-row:last-child {
+    border-bottom: none;
+}
+
+
+.subject-focus-name {
+    margin: 0 0 6px;
+
+    color: #f7f4ff;
+
+    font-family: "Better VCR",
+    monospace;
+
+    font-size: 0.9rem;
+}
+
+
+.subject-focus-minutes {
+    margin: 0;
+
+    color: rgba(255, 255, 255, 0.5);
+
+    font-size: 0.95rem;
+}
+
+
+.subject-focus-percentage {
+    margin: 0;
+
+    color: #c6b4ff;
+
+    font-family: "Better VCR",
+    monospace;
+
+    font-size: 1rem;
+
+    white-space: nowrap;
+}
+
+
+.insights-empty {
+    margin: 30px 0 0;
+
+    color: rgba(255, 255, 255, 0.5);
+
+    font-family: "Apple Garamond",
+    Georgia,
+    serif;
+
+    font-size: 1.15rem;
+
+    text-align: center;
+}
+
+.subject-focus-info {
+    width: 100%;
+}
+
+
+.subject-focus-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 24px;
+}
+
+
+.subject-focus-track {
+    width: 100%;
+    height: 7px;
+
+    margin-top: 14px;
+
+    overflow: hidden;
+
+    background: rgba(255, 255, 255, 0.08);
+
+    border-radius: 999px;
+}
+
+
+.subject-focus-fill {
+    height: 100%;
+
+    background: linear-gradient(
+            to right,
+            #9e86e7,
+            #c6b4ff
+    );
+
+    border-radius: inherit;
+
+    box-shadow: 0 0 14px rgba(198, 180, 255, 0.4);
+
+    transition: width 500ms ease;
+}
+
+
+/* ---------------- ERROR / LOADING ---------------- */
+
+
+.insights-main > p {
+    color: rgba(255, 255, 255, 0.58);
+
+    text-align: center;
+}
+
+
+.insights-error {
+    width: min(560px, 100%);
+
+    margin: 40px auto 0;
+    padding: 14px 18px;
+
+    box-sizing: border-box;
+
+    color: #ffd7df;
+
+    background: rgba(120, 35, 58, 0.22);
+
+    border: 1px solid rgba(255, 145, 170, 0.35);
+
+    border-radius: 12px;
+
+    text-align: center;
+}
+
+
+/* ---------------- TABLET ---------------- */
+
+
+@media (max-width: 900px) {
+    .insights-overview {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+/* ---------------- MOBILE ---------------- */
+
+
+@media (max-width: 760px) {
+    .insights-main {
+        width: calc(100% - 40px);
+
+        padding: 40px 0 64px;
+    }
+
+
+    .insights-header {
+        margin-bottom: 32px;
+
+        text-align: center;
+    }
+
+
+    .insights-description {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+
+    .insights-overview {
+        grid-template-columns: 1fr;
+
+        gap: 14px;
+    }
+
+
+    .insights-highlight-grid {
+        grid-template-columns: 1fr;
+
+        gap: 14px;
+    }
+
+
+    .insights-section {
+        margin-top: 32px;
+        padding: 24px 18px;
+    }
+
+
+    .weekly-chart {
+        height: 240px;
+
+        gap: 8px;
+    }
+
+
+    .weekly-chart-track {
+        max-width: 34px;
+        height: 175px;
+    }
+
+
+    .weekly-chart-value {
+        font-size: 0.7rem;
+    }
+
+
+    .weekly-chart-day {
+        font-size: 0.58rem;
+    }
+
+
+    .subject-focus-row {
+        gap: 16px;
+    }
+}
