@@ -2,7 +2,7 @@ import {Group} from "three";
 import {createBaseGasPlanet} from "../Layers/baseGasPlanet.js";
 import {createGasPLayer} from "../Layers/gasLayer.js";
 
-export const createGasGiant = (colors = null) => {
+export const createGasGiant = (colors = null, stage = "COMPLETE") => {
     const gasGiantGroup = new Group()
     const baseColors =
         colors
@@ -31,7 +31,9 @@ export const createGasGiant = (colors = null) => {
         undefined,
         gasColors)
     gasGiantGroup.add(basePlanet)
-    gasGiantGroup.add(gasLayer)
+    if (stage !== 'BARREN') {
+        gasGiantGroup.add(gasLayer)
+    }
 
     return gasGiantGroup
 }

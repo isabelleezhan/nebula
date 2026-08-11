@@ -2,7 +2,7 @@ import {Group} from "three";
 import {createDenseGasPlanet} from "../Layers/denseGasLayer.js";
 import {createRingLayer} from "../Layers/ringLayer.js";
 
-export const createGasGiantRing = (colors = null) => {
+export const createGasGiantRing = (colors = null, stage = "COMPLETE") => {
     const gasGiantGroup = new Group()
 
     const ring = createRingLayer(undefined,
@@ -17,7 +17,12 @@ export const createGasGiantRing = (colors = null) => {
     ring.position.z = 0.01
     ring.scale.set(2.0, 2.0)
     gasGiantGroup.add(gasPlanet)
-    gasGiantGroup.add(ring)
+    if (
+        stage === 'CIVILIZATION' ||
+        stage === 'COMPLETE'
+    ) {
+        gasGiantGroup.add(ring)
+    }
 
     return gasGiantGroup
 }

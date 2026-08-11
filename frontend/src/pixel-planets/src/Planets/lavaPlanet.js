@@ -4,7 +4,7 @@ import {createCraterLayer} from "../Layers/craterLayer.js";
 import {createRiverLayer} from "../Layers/riversLayer.js";
 import {createGroup} from "../Three.js";
 
-export const createLavaPlanet = (colors = null) => {
+export const createLavaPlanet = (colors = null, stage = "COMPLETE") => {
     const colorPaletteBase =
         colors
             ? [
@@ -48,7 +48,21 @@ export const createLavaPlanet = (colors = null) => {
     const craterLayer = createCraterLayer(undefined, colorPaletteCrater)
     const riverLayer = createRiverLayer(undefined, undefined, undefined, colorPaletteRiver);
     planetGroup.add(basePlanet);
-    planetGroup.add(craterLayer)
-    planetGroup.add(riverLayer)
+    if (
+        stage === 'TERRAIN' ||
+        stage === 'BIOSPHERE' ||
+        stage === 'CIVILIZATION' ||
+        stage === 'COMPLETE'
+    ) {
+        planetGroup.add(craterLayer)
+    }
+
+    if (
+        stage === 'BIOSPHERE' ||
+        stage === 'CIVILIZATION' ||
+        stage === 'COMPLETE'
+    ) {
+        planetGroup.add(riverLayer)
+    }
     return planetGroup
 }

@@ -3,7 +3,7 @@ import {createBasePlanet} from "../Layers/basePlanet.js"
 import {createCloudLayer} from "../Layers/cloudLayer.js"
 import {createLakeLayer} from "../Layers/lakeLayer.js"
 
-export const createIcePlanet = (colors = null) => {
+export const createIcePlanet = (colors = null, stage = "COMPLETE") => {
     const icePlanet = new Group()
     const baseColorPalette =
         colors
@@ -40,8 +40,22 @@ export const createIcePlanet = (colors = null) => {
         ]
         : undefined)
     icePlanet.add(basePlanet)
-    icePlanet.add(lakeLayer)
-    icePlanet.add(cloudLayer)
+    if (
+        stage === 'TERRAIN' ||
+        stage === 'BIOSPHERE' ||
+        stage === 'CIVILIZATION' ||
+        stage === 'COMPLETE'
+    ) {
+        icePlanet.add(lakeLayer)
+    }
+
+    if (
+        stage === 'BIOSPHERE' ||
+        stage === 'CIVILIZATION' ||
+        stage === 'COMPLETE'
+    ) {
+        icePlanet.add(cloudLayer)
+    }
 
     return icePlanet;
 }

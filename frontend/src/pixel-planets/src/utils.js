@@ -41,25 +41,26 @@ export function randomPointOnSphere() {
 }
 
 export function generatePlanetByType(type,
-                                     colors = null) {
+                                     colors = null,
+                                     stage = "COMPLETE") {
     switch (type) {
         case "No atmosphere":
-            return createNoAtmospherePlanet(colors)
+            return createNoAtmospherePlanet(color, stage)
         case "Ice Planet":
-            return createIcePlanet(colors)
+            return createIcePlanet(colors, stage)
         case "Gas giant 1":
-            return createGasGiant(colors)
+            return createGasGiant(colors, stage)
         case "Gas giant 2":
-            return createGasGiantRing(colors)
+            return createGasGiantRing(colors, stage)
         case "Asteroid":
             return createAsteroid()
         case "Star":
             return createStarPlanet()
         case "Lava Planet":
-            return createLavaPlanet(colors)
+            return createLavaPlanet(colors, stage)
         case "Dry Planet":
             return createDryPlanet(undefined, colors)
         case "Earth Planet":
-            return createEarthPlanet(colors)
+            return createEarthPlanet(colors, stage)
     }
 }

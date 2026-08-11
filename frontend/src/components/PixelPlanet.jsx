@@ -5,27 +5,8 @@ import {createClock, createScene, createWebGlRenderer} from '../pixel-planets/sr
 import {generatePlanetByType, setPlanetRandomSeed} from '../pixel-planets/src/utils.js'
 import {generatePlanetPalette} from '../pixel-planets/src/planetPaletteGenerator.js'
 import {evolvePalette} from '../pixel-planets/src/planetColorEvolution.js'
+import {getPlanetType} from '../pixel-planets/src/planetVisuals.js'
 import '../styles/PixelPlanet.css'
-
-const PLANET_TYPES = [
-    'No atmosphere',
-    'Ice Planet',
-    'Gas giant 1',
-    'Gas giant 2',
-    'Lava Planet',
-    'Dry Planet',
-    'Earth Planet'
-]
-
-function getPlanetType(seed) {
-    const numericSeed =
-        Math.abs(Number(seed) || 1)
-
-    const index =
-        numericSeed % PLANET_TYPES.length
-
-    return PLANET_TYPES[index]
-}
 
 function PixelPlanet({planet}) {
     const containerRef =
@@ -109,7 +90,8 @@ function PixelPlanet({planet}) {
         const generatedPlanet =
             generatePlanetByType(
                 planetType,
-                visiblePalette
+                visiblePalette,
+                planet?.stage
             )
 
         planetGroup.add(generatedPlanet)

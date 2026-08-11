@@ -288,7 +288,8 @@
 
     position: absolute;
 
-    background: rgba(146, 118, 255, 0.18);
+    --planet-glow: rgba(146, 118, 255, 0.18);
+    background: var(--planet-glow);
 
     border-radius: 50%;
 

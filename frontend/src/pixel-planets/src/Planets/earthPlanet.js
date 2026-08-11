@@ -4,7 +4,8 @@ import {createBasePlanet} from "../Layers/basePlanet.js";
 import {createCloudLayer} from "../Layers/cloudLayer.js";
 import {createlandMassLayer} from "../Layers/landMass.js";
 
-export const createEarthPlanet = (colors = null) => {
+export const createEarthPlanet = (colors = null,
+                                  stage = "COMPLETE") => {
     const earth = new Group();
     const baseColors =
         colors
@@ -44,6 +45,34 @@ export const createEarthPlanet = (colors = null) => {
     const clouds = createCloudLayer(cloudColors)
     const atmosphere = createAtmosphereLayer()
 
-    earth.add(basePlanet, landmass, clouds, atmosphere)
+    // earth.add(basePlanet, landmass, clouds, atmosphere)
+    earth.add(basePlanet)
+
+    if (
+        stage === 'TERRAIN' ||
+        stage === 'BIOSPHERE' ||
+        stage === 'CIVILIZATION' ||
+        stage === 'COMPLETE'
+    ) {
+        earth.add(landmass)
+    }
+
+    if (
+        stage === 'ATMOSPHERE' ||
+        stage === 'TERRAIN' ||
+        stage === 'BIOSPHERE' ||
+        stage === 'CIVILIZATION' ||
+        stage === 'COMPLETE'
+    ) {
+        earth.add(atmosphere)
+    }
+
+    if (
+        stage === 'BIOSPHERE' ||
+        stage === 'CIVILIZATION' ||
+        stage === 'COMPLETE'
+    ) {
+        earth.add(clouds)
+    }
     return earth
 }

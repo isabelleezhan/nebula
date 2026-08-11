@@ -1,18 +1,30 @@
 import {useEffect, useState} from 'react'
-
 import AppNav from '../components/AppNav'
-
 import {createSubject, getSubjects} from '../api/subjectApi.js'
-
 import {getActivePlanet, renamePlanet} from '../api/planetApi.js'
 import {recordFocusSession} from '../api/focusSessionApi'
 import '../styles/OrbitPage.css'
 import PixelPlanet from "../components/PixelPlanet.jsx";
+import {getPlanetGlowColor} from "../pixel-planets/src/planetVisuals.js";
 
 
 function OrbitPage() {
     const ACTIVE_SESSION_KEY =
         'nebulaActiveFocusSession'
+
+    //
+    // const DEBUG_STAGES = [
+    //     'BARREN',
+    //     'ATMOSPHERE',
+    //     'TERRAIN',
+    //     'BIOSPHERE',
+    //     'CIVILIZATION',
+    //     'COMPLETE'
+    // ]
+    //
+    // const [debugStageIndex, setDebugStageIndex] =
+    //     useState(null)
+    //
 
     const [subjects, setSubjects] = useState([])
     const [selectedSubjectId, setSelectedSubjectId] = useState('')
@@ -457,12 +469,23 @@ function OrbitPage() {
         }
     }
 
-
     function closeSubjectForm() {
         setIsCreatingSubject(false)
         setNewSubjectName('')
     }
 
+    const planetGlowColor =
+        getPlanetGlowColor(planet)
+
+    //
+    // const displayedPlanet =
+    //     debugStageIndex === null
+    //         ? planet
+    //         : {
+    //             ...planet,
+    //             stage: DEBUG_STAGES[debugStageIndex]
+    //         }
+    //
 
     if (isLoading) {
         return (<p>Charting your orbit...</p>)
@@ -470,7 +493,9 @@ function OrbitPage() {
 
 
     return (
-        <div className="orbit-page">
+        <div
+            className="orbit-page"
+        >
             <AppNav/>
 
             <main className="orbit-main">
@@ -615,7 +640,13 @@ function OrbitPage() {
                         </div>
                     </form>)}
                 </section>) : (<section className="current-world">
-                    <div className="planet-scene">
+                    <div
+                        className="planet-scene"
+                        style={{
+                            '--planet-glow':
+                            planetGlowColor
+                        }}
+                    >
                         <PixelPlanet planet={planet}/>
                     </div>
 
@@ -740,6 +771,31 @@ function OrbitPage() {
                                 >
                                     {isSavingSession ? 'Saving mission...' : 'End mission'}
                                 </button>
+
+                                {/*<button*/}
+                                {/*    type="button"*/}
+                                {/*    onClick={() => {*/}
+                                {/*        setDebugStageIndex(current => {*/}
+                                {/*            if (current === null) {*/}
+                                {/*                return 0*/}
+                                {/*            }*/}
+
+                                {/*            return (*/}
+                                {/*                current + 1*/}
+                                {/*            ) % DEBUG_STAGES.length*/}
+                                {/*        })*/}
+                                {/*    }}*/}
+                                {/*>*/}
+                                {/*    Preview next stage*/}
+                                {/*</button>*/}
+                                {/*<button*/}
+                                {/*    type="button"*/}
+                                {/*    onClick={() => {*/}
+                                {/*        setDebugStageIndex(null)*/}
+                                {/*    }}*/}
+                                {/*>*/}
+                                {/*    Use real stage*/}
+                                {/*</button>*/}
                             </div>
                         </div>)}
                     </div>

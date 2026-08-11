@@ -2,7 +2,22 @@ import {useEffect, useState} from 'react'
 import {renameSubject} from "../api/subjectApi.js";
 import PixelPlanet from '../components/PixelPlanet'
 import {Link} from 'react-router'
+import {getPlanetGlowColor} from "../pixel-planets/src/planetVisuals.js";
 
+function PlanetCard({planet}) {
+    const glowColor = getPlanetGlowColor(planet)
+    return (
+        <div className="carousel-card-content">
+            <div
+                className="carousel-planet-glow"
+                style={{
+                    '--planet-glow': glowColor
+                }}
+            />
+            <PixelPlanet planet={planet}/>
+        </div>
+    )
+}
 
 function StarSystemCarousel({
                                 subject,
@@ -127,7 +142,6 @@ function StarSystemCarousel({
 
         return 'hidden'
     }
-
 
     if (planets.length === 0) {
         return (
@@ -430,16 +444,6 @@ function StarSystemCarousel({
                 </p>
             </div>
         </section>
-    )
-}
-
-
-function PlanetCard({planet}) {
-    return (
-        <div className="carousel-card-content">
-            <div className="carousel-planet-glow"/>
-            <PixelPlanet planet={planet}/>
-        </div>
     )
 }
 

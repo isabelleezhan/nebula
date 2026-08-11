@@ -2,7 +2,7 @@ import {Group} from "three"
 import {createBasePlanet} from "../Layers/basePlanet.js"
 import {createCraterLayer} from "../Layers/craterLayer.js"
 
-export const createNoAtmospherePlanet = (colors = null) => {
+export const createNoAtmospherePlanet = (colors = null, stage = "COMPLETE") => {
     const noAtmospherePlanet = new Group()
 
     const basePlanet = createBasePlanet(undefined, undefined, colors)
@@ -16,7 +16,9 @@ export const createNoAtmospherePlanet = (colors = null) => {
             : undefined)
 
     noAtmospherePlanet.add(basePlanet)
-    noAtmospherePlanet.add(craterLayer)
+    if (stage !== 'BARREN') {
+        noAtmospherePlanet.add(craterLayer)
+    }
 
     return noAtmospherePlanet
 }

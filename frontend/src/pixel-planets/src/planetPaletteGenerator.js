@@ -28,6 +28,18 @@ function makeColor(
     return colorToVector4(color)
 }
 
+function wrapHue(hue) {
+    if (hue < 0) {
+        return hue + 1
+    }
+
+    if (hue > 1) {
+        return hue - 1
+    }
+
+    return hue
+}
+
 export function generatePlanetPalette(
     seed,
     planetType
@@ -40,55 +52,76 @@ export function generatePlanetPalette(
     const baseHue =
         random()
 
-    /*
-     * Instead of four shades of exactly
-     * one hue, let neighboring colors
-     * wander around the color wheel.
-     */
-    const hueShift1 =
+    const analogousShift =
         (random() - 0.5) * 0.12
 
-    const hueShift2 =
-        (random() - 0.5) * 0.20
+    const accentDirection =
+        random() < 0.5
+            ? -1
+            : 1
 
-    const saturation =
-        0.45 +
-        random() * 0.35
+    const accentShift =
+        0.38 + random() * 0.06
+
+    const primaryHue =
+        baseHue
+
+    const analogousHue =
+        baseHue + analogousShift
+
+    const accentHue =
+        baseHue +
+        accentDirection *
+        accentShift
+
+    const primarySaturation =
+        0.48 +
+        random() * 0.22
+
+    const accentSaturation =
+        0.25 +
+        random() * 0.18
 
     return [
+        // bright highlight
         makeColor(
-            baseHue,
-            saturation,
+            primaryHue,
+            primarySaturation * 0.65,
             0.78
         ),
 
+        // main planet color
         makeColor(
-            baseHue + hueShift1 * 0.5,
-            saturation,
-            0.66
+            primaryHue,
+            primarySaturation,
+            0.64
         ),
 
+        // nearby analogous variation
         makeColor(
-            baseHue + hueShift1,
-            saturation * 0.95,
-            0.54
+            analogousHue,
+            primarySaturation * 0.9,
+            0.52
         ),
 
+        // darker analogous variation
         makeColor(
-            baseHue + hueShift2,
-            saturation * 0.9,
-            0.42
+            analogousHue,
+            primarySaturation * 0.75,
+            0.40
         ),
 
+        // ONE restrained contrasting accent
         makeColor(
-            baseHue + hueShift2 * 1.2,
-            saturation * 0.82,
-            0.30
+            accentHue,
+            accentSaturation,
+            0.46
         ),
 
+        // deep shadow returns to main family
         makeColor(
-            baseHue + hueShift2 * 1.4,
-            saturation * 0.72,
+            primaryHue,
+            primarySaturation * 0.55,
             0.20
         )
     ]

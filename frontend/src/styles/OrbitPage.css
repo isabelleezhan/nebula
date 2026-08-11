@@ -3,14 +3,8 @@
 
     color: #f7f4ff;
 
-    background: radial-gradient(
-            circle at 50% 35%,
-            rgba(92, 76, 145, 0.28),
-            transparent 38%
-    ),
-    #080711;
+    background: #080711;
 }
-
 
 .orbit-main {
     min-height: calc(100vh - 80px);
@@ -90,12 +84,20 @@
 
 
 .planet-scene {
+    --planet-glow: rgba(92, 76, 145, 0.28);
+
     min-height: 480px;
 
     position: relative;
 
     display: grid;
     place-items: center;
+
+    background: radial-gradient(
+            circle at center,
+            var(--planet-glow),
+            transparent 55%
+    );
 }
 
 
