@@ -24,9 +24,14 @@ a {
 }
 
 .landing-logo {
+    font-family: "Better VCR", monospace;
+
     font-size: 1.2rem;
-    font-weight: 700;
+    font-weight: 400;
     letter-spacing: 0.18em;
+
+    color: inherit;
+    text-decoration: none;
 }
 
 .landing-actions {
@@ -88,6 +93,8 @@ a {
     margin: 0 0 22px;
 
     font-size: 0.75rem;
+    font-family: "Better VCR",
+    monospace;
     letter-spacing: 0.22em;
 
     opacity: 0.55;
@@ -95,15 +102,15 @@ a {
 
 .landing-hero h1 {
     margin: 0;
+    font-family: "Better VCR", monospace;
 
-    font-size: clamp(3.4rem, 6vw, 6.5rem);
+    font-size: clamp(3.4rem, 5vw, 6.5rem);
     line-height: 0.95;
     letter-spacing: -0.04em;
 }
 
 .landing-description {
     max-width: 520px;
-
     margin: 28px 0 0;
 
     line-height: 1.7;
@@ -133,6 +140,17 @@ a {
             transparent 38%
     ),
     #080711;
+}
+
+.landing-star {
+    width: 420px;
+    height: 420px;
+
+    position: relative;
+
+    filter: drop-shadow(
+            0 0 45px rgba(164, 120, 255, 0.42)
+    );
 }
 
 @media (max-width: 768px) {
@@ -184,5 +202,10 @@ a {
 
     .planet-placeholder {
         width: min(75vw, 320px);
+    }
+
+    .landing-star {
+        width: 350px;
+        height: 350px;
     }
 }

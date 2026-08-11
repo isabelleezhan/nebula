@@ -7,6 +7,7 @@ import {createSubject, getSubjects} from '../api/subjectApi.js'
 import {getActivePlanet, renamePlanet} from '../api/planetApi.js'
 import {recordFocusSession} from '../api/focusSessionApi'
 import '../styles/OrbitPage.css'
+import PixelPlanet from "../components/PixelPlanet.jsx";
 
 
 function OrbitPage() {
@@ -430,11 +431,7 @@ function OrbitPage() {
                     </form>)}
                 </section>) : (<section className="current-world">
                     <div className="planet-scene">
-                        <img
-                            src="../../public/4158376800-cropped.gif"
-                            alt="Current planet"
-                            className="planet-placeholder-image"
-                        />
+                        <PixelPlanet planet={planet}/>
                     </div>
 
                     <div className="world-details">

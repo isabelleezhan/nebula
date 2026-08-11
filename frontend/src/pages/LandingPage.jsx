@@ -1,5 +1,6 @@
 import '../styles/LandingPage.css'
 import {Link} from 'react-router'
+import PixelStar from '../components/PixelStar'
 
 function LandingPage() {
     return (
@@ -8,7 +9,7 @@ function LandingPage() {
             <header className="landing-nav">
                 <Link
                     to="/"
-                    className="auth-logo">
+                    className="landing-logo">
                     NEBULA
                 </Link>
 
@@ -54,9 +55,9 @@ function LandingPage() {
                     <div className="planet-scene">
                         <div className="planet-glow"/>
 
-                        <img src="../../public/4158376800-cropped.gif"
-                             alt="Planet"
-                             className="planet-placeholder-image"/>
+                        <div className="landing-star">
+                            <PixelStar/>
+                        </div>
 
                         <div className="planet-moon"/>
                     </div>

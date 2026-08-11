@@ -80,21 +80,6 @@
 }
 
 
-.planet-detail-visual img {
-    width: min(370px, 70vw);
-    aspect-ratio: 1;
-
-    position: relative;
-    z-index: 1;
-
-    object-fit: contain;
-
-    filter: drop-shadow(
-            0 0 35px rgba(160, 130, 255, 0.35)
-    );
-}
-
-
 .planet-detail-info {
     display: flex;
     flex-direction: column;
@@ -111,7 +96,6 @@
     font-size: 0.7rem;
     letter-spacing: 0.16em;
 }
-
 
 .planet-detail-label,
 .mission-log-label {

@@ -34,19 +34,6 @@
     opacity: 1;
 }
 
-.home {
-    min-height: calc(100vh - 72px);
-
-    display: flex;
-    align-items: center;
-
-    padding: 64px;
-}
-
-.hero {
-    max-width: 720px;
-}
-
 .eyebrow {
     margin-bottom: 20px;
 
@@ -55,23 +42,3 @@
     opacity: 0.6;
 }
 
-
-/*button {*/
-/*    margin-top: 24px;*/
-/*    background-color: transparent;*/
-
-/*    padding: 14px 24px;*/
-
-/*    border: 2px solid #0ff;*/
-/*    border-radius: 999px;*/
-/*    box-shadow: 0 0 5px #0ff,*/
-/*    inset 0 0 5px #0ff,*/
-/*    0 0 20px #0ff;*/
-
-/*    font-size: 1rem;*/
-/*    font-weight: 600;*/
-/*    color: white;*/
-
-/*    cursor: pointer;*/
-/*    transition: all 0.3s ease-in-out;*/
-/*}*/

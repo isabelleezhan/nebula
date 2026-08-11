@@ -3,6 +3,7 @@ import {Link, useParams} from 'react-router'
 import AppNav from '../components/AppNav'
 import {getSessionsForPlanet} from '../api/focusSessionApi'
 import {getPlanet, renamePlanet} from '../api/planetApi'
+import PixelPlanet from '../components/PixelPlanet'
 import '../styles/PlanetDetailPage.css'
 
 
@@ -151,15 +152,7 @@ function PlanetDetailPage() {
                                     'planet-detail-visual'
                                 }
                             >
-                                <img
-                                    src={
-                                        '/4158376800-cropped.gif'
-                                    }
-                                    alt={
-                                        planet?.name ||
-                                        'Planet'
-                                    }
-                                />
+                                <PixelPlanet planet={planet}/>
                             </div>
 
                             <div

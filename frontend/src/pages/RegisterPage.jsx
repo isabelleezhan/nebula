@@ -2,6 +2,7 @@ import '../styles/AuthPage.css'
 import {Link, useNavigate} from 'react-router'
 import {useState} from 'react'
 import {registerUser} from '../api/authApi'
+import PixelStar from '../components/PixelStar.jsx'
 
 function RegisterPage() {
     const navigate = useNavigate()
@@ -149,10 +150,9 @@ function RegisterPage() {
 
                         <div className="auth-glow"/>
 
-                        <img src="../../public/1278300405-cropped.gif"
-                             alt="Planet"
-                             className="planet-image"/>
-
+                        <div className="planet-image">
+                            <PixelStar color={"red"}/>
+                        </div>
                     </div>
                 </section>
             </main>
