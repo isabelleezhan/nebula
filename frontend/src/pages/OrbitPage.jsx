@@ -11,6 +11,9 @@ import PixelPlanet from "../components/PixelPlanet.jsx";
 
 
 function OrbitPage() {
+    const ACTIVE_SESSION_KEY =
+        'nebulaActiveFocusSession'
+
     const [subjects, setSubjects] = useState([])
     const [selectedSubjectId, setSelectedSubjectId] = useState('')
 
@@ -23,10 +26,12 @@ function OrbitPage() {
     const [newSubjectName, setNewSubjectName] = useState('')
     const [isCreating, setIsCreating] = useState(false)
     const [elapsedSeconds, setElapsedSeconds] = useState(0)
+    const [accumulatedSeconds, setAccumulatedSeconds] = useState(0)
 
     const [isFocusing, setIsFocusing] = useState(false)
     const [isPaused, setIsPaused] = useState(false)
 
+    const [originalSessionStartedAt, setOriginalSessionStartedAt] = useState(null)
     const [sessionStartedAt, setSessionStartedAt] = useState(null)
     const [isSavingSession, setIsSavingSession] = useState(false)
 
@@ -34,6 +39,69 @@ function OrbitPage() {
         useState(false)
     const [planetName, setPlanetName] =
         useState('')
+
+    useEffect(() => {
+        const savedSession =
+            localStorage.getItem(
+                ACTIVE_SESSION_KEY
+            )
+
+        if (!savedSession) {
+            return
+        }
+
+        try {
+            const parsedSession =
+                JSON.parse(savedSession)
+
+            setSelectedSubjectId(
+                String(
+                    parsedSession.subjectId
+                )
+            )
+
+            setAccumulatedSeconds(
+                parsedSession.accumulatedSeconds
+            )
+
+            setIsPaused(
+                parsedSession.isPaused
+            )
+
+            setIsFocusing(true)
+
+            if (
+                parsedSession.originalSessionStartedAt
+            ) {
+                setOriginalSessionStartedAt(
+                    new Date(
+                        parsedSession.originalSessionStartedAt
+                    )
+                )
+            }
+            if (
+                parsedSession.sessionStartedAt
+            ) {
+                setSessionStartedAt(
+                    new Date(
+                        parsedSession
+                            .sessionStartedAt
+                    )
+                )
+            } else {
+                setSessionStartedAt(null)
+
+                setElapsedSeconds(
+                    parsedSession
+                        .accumulatedSeconds
+                )
+            }
+        } catch {
+            localStorage.removeItem(
+                ACTIVE_SESSION_KEY
+            )
+        }
+    }, [])
 
     useEffect(() => {
         async function loadSubjects() {
@@ -44,9 +112,17 @@ function OrbitPage() {
 
                 setSubjects(loadedSubjects)
 
-                if (loadedSubjects.length > 0) {
-                    setSelectedSubjectId(String(loadedSubjects[0].id))
-                }
+                setSelectedSubjectId(
+                    currentSubjectId => {
+                        if (currentSubjectId) {
+                            return currentSubjectId
+                        }
+
+                        return String(
+                            loadedSubjects[0].id
+                        )
+                    }
+                )
             } catch (error) {
                 setError(error.message)
             } finally {
@@ -81,20 +157,87 @@ function OrbitPage() {
         void loadActivePlanet()
     }, [selectedSubjectId])
 
-
     useEffect(() => {
-        if (!isFocusing || isPaused) {
+        if (!isFocusing || !planet) {
             return
         }
 
-        const intervalId = window.setInterval(() => {
-            setElapsedSeconds((currentSeconds) => currentSeconds + 1)
-        }, 1000)
+        const activeSession = {
+            planetId: planet.id,
+
+            subjectId:
+            selectedSubjectId,
+
+            accumulatedSeconds,
+
+            originalSessionStartedAt:
+                originalSessionStartedAt
+                    ? originalSessionStartedAt.toISOString()
+                    : null,
+
+            sessionStartedAt:
+                sessionStartedAt
+                    ? sessionStartedAt.toISOString()
+                    : null,
+
+            isPaused
+        }
+
+        localStorage.setItem(
+            ACTIVE_SESSION_KEY,
+            JSON.stringify(activeSession)
+        )
+    }, [
+        isFocusing,
+        planet,
+        selectedSubjectId,
+        accumulatedSeconds,
+        originalSessionStartedAt,
+        sessionStartedAt,
+        isPaused
+    ])
+
+
+    useEffect(() => {
+        if (
+            !isFocusing ||
+            isPaused ||
+            !sessionStartedAt
+        ) {
+            return
+        }
+
+        function updateElapsedTime() {
+            const currentRunSeconds =
+                Math.floor(
+                    (
+                        Date.now() -
+                        sessionStartedAt.getTime()
+                    ) / 1000
+                )
+
+            setElapsedSeconds(
+                accumulatedSeconds +
+                currentRunSeconds)
+        }
+
+        updateElapsedTime()
+
+        const intervalId =
+            window.setInterval(
+                updateElapsedTime,
+                1000
+            )
 
         return () => {
             window.clearInterval(intervalId)
         }
-    }, [isFocusing, isPaused])
+    }, [
+        isFocusing,
+        isPaused,
+        sessionStartedAt,
+        accumulatedSeconds
+    ])
 
     function formatLocalDateTime(date) {
         const year = date.getFullYear()
@@ -215,14 +358,48 @@ function OrbitPage() {
     function handleBeginFocus() {
         setError('')
         setElapsedSeconds(0)
-        setSessionStartedAt(new Date())
+        setAccumulatedSeconds(0)
+
+        const now = new Date()
+
+        setOriginalSessionStartedAt(now)
+        setSessionStartedAt(now)
+
         setIsFocusing(true)
         setIsPaused(false)
     }
 
 
     function handleTogglePause() {
-        setIsPaused((currentValue) => !currentValue)
+        if (!isPaused) {
+            const currentRunSeconds =
+                Math.floor(
+                    (
+                        Date.now() -
+                        sessionStartedAt.getTime()
+                    ) / 1000
+                )
+
+            const updatedAccumulatedSeconds =
+                accumulatedSeconds +
+                currentRunSeconds
+
+            setAccumulatedSeconds(
+                updatedAccumulatedSeconds
+            )
+
+            setElapsedSeconds(
+                updatedAccumulatedSeconds
+            )
+
+            setSessionStartedAt(null)
+            setIsPaused(true)
+
+            return
+        }
+
+        setSessionStartedAt(new Date())
+        setIsPaused(false)
     }
 
 
@@ -234,7 +411,7 @@ function OrbitPage() {
             return
         }
 
-        if (!planet || !sessionStartedAt) {
+        if (!planet || !originalSessionStartedAt) {
             setError('Could not determine the current focus session.')
             return
         }
@@ -249,7 +426,7 @@ function OrbitPage() {
             await recordFocusSession({
                 planetId: planet.id,
 
-                startedAt: formatLocalDateTime(sessionStartedAt),
+                startedAt: formatLocalDateTime(originalSessionStartedAt),
 
                 endedAt: formatLocalDateTime(endedAt),
 
@@ -263,8 +440,16 @@ function OrbitPage() {
 
             setIsFocusing(false)
             setIsPaused(false)
+
             setElapsedSeconds(0)
+            setAccumulatedSeconds(0)
+
+            setOriginalSessionStartedAt(null)
             setSessionStartedAt(null)
+
+            localStorage.removeItem(
+                ACTIVE_SESSION_KEY
+            )
         } catch (error) {
             setError(error.message)
         } finally {
