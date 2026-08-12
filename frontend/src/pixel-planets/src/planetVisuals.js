@@ -3,7 +3,6 @@ import {evolvePalette} from './PlanetColorEvolution.js'
 
 
 const PLANET_TYPES = [
-    'No atmosphere',
     'Ice Planet',
     'Gas giant 1',
     'Gas giant 2',

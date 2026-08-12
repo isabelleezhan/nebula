@@ -1,212 +1,124 @@
 # Nebula
 
-Nebula is a gamified focus and study application where focused work evolves unique planets over time.
+Nebula is a gamified focus web-application that turns time spent focused into an unique galaxy of planets.
 
-- Each study subject—such as a university course or personal project—is represented by a star.
-- As the user completes focus sessions, their currently active planet accumulates study time and progresses through
-  visual evolution stages.
-- Once fully evolved, the planet becomes a permanent part of the user's solar system and a new planet can begin growing
-  around the same star.
+Each subject is represented by a star. As users complete focus sessions, their active planet accumulates focus time and
+evolves through multiple visual stages. Once fully evolved, the planet becomes part of that subject's permanent star
+system and a new planet begins growing.
 
-The goal of Nebula is to turn focused work into a fun, visual record of effort!
+## Preview
 
----
+### Orbit
 
-## Core Concept
+![Nebula Orbit page](docs/images/launch.gif)
 
-The central gameplay loop is:
+### Galaxy
 
-```text
-study
-  ↓
-grow a planet
-  ↓
-complete the planet
-  ↓
-add it to a solar system
-  ↓
-continue expanding the system
+![Nebula Galaxy page](docs/images/galaxy.gif)
+
+### Insights
+
+![Nebula Insights page](docs/images/insights.gif)
+
+## Overview
+
+Nebula combines productivity tracking with procedural visualization.
+
+study (time focusing)  
+↓  
+evolve a planet  
+↓  
+fully evolve the planet  
+↓  
+add it to a subject's star system
+
+A subject represents what the user is focusing on, such as a university course. Each subject can accumulate multiple
+planets over time.
+
+## Features
+
+- User registration and session-based authentication
+- Subject creation and management
+- Focus timer with pause, resume, and completion
+- Persistent focus-session tracking
+- Planet progression based on accumulated focus time
+- Deterministic procedural planet generation
+- Stage-based planet evolution
+- Subject-based star systems
+- Planet and subject detail views
+- Weekly productivity analytics
+- User-scoped data access and protected routes
+
+## Tech Stack
+
+### Backend
+
+- Java
+- Spring Boot
+- Spring Data JPA
+- Spring Security
+- PostgreSQL
+- Maven
+
+### Frontend
+
+- React
+- Vite
+- React Router
+- Three.js / WebGL
+- CSS
+
+## Architecture
+
+Nebula uses a layered backend architecture:
+
+Controller  
+↓  
+Service  
+↓  
+Repository  
+↓  
+PostgreSQL
+
+The primary domain relationships are:
+
+User  
+↓  
+Subject  
+↓  
+Planet  
+↓  
+FocusSession
+
+## Running Locally
+
+### Prerequisites
+
+- Java
+- Node.js
+- Docker
+- Docker Compose
+
+### Start PostgreSQL
+
+```bash
+docker compose up -d
 ```
 
-A **Subject** represents what the user is working on.
+### Start the backend
 
-Examples:
-
-```text
-CPSC 213
-MATH 221
-LeetCode
-Personal Project
-Undergraduate Society
+```bash
+./mvnw spring-boot:run
 ```
 
-Each context is visually represented by a **star**.
+### Start the frontend
 
-A star can eventually have many completed planets orbiting it:
-
-```text
-                    Planet
-                      │
-                      │
-Planet ─────── CPSC 213 Star ─────── Planet
-                      │
-                      │
-                    Planet
+```bash
+cd frontend
+npm install
+npm run dev
 ```
 
----
+## Attributions
 
-# Project Phases
-
-## Phase 1 — Core Domain and Backend
-
-Build the initial application model and persistence layer.
-
-### Goals
-
-* create `StudyContext`
-* create `Planet`
-* create `FocusSession`
-* create repositories
-* create service layer
-* implement planet evolution rules
-* create basic REST endpoints
-* connect the application to PostgreSQL
-* test the core study-session workflow
-
----
-
-## Phase 2 — Authentication and User Ownership
-
-Add multiple users and secure personal data.
-
-### Goals
-
-* create `User` entity
-* register accounts
-* securely hash passwords
-* log users in
-* authenticate requests
-* protect API endpoints
-* associate study contexts with users
-* ensure users can only access their own data
-* support logout/session expiration as appropriate
-
-Authentication is a core requirement of the finished application, not an optional extension.
-
----
-
-## Phase 3 — React Frontend and Focus Timer
-
-Create the primary user interface.
-
-### Goals
-
-* create React application
-* connect React to Spring Boot API
-* create registration page
-* create login page
-* create authenticated routes
-* create study-context selector
-* build focus timer
-* support start, pause, resume, and finish actions
-* display the currently evolving planet
-* display planet progress
-
----
-
-## Phase 4 — Procedural Planet System
-
-Make planets visually unique.
-
-### Goals
-
-* generate deterministic planet characteristics from a seed
-* reflect evolution stages visually
-* display distinct planetary landscapes
-* support reusable procedural generation
-* introduce rare visual traits
-* preserve finished planet appearances permanently
-
----
-
-## Phase 5 — Solar-System Dashboard
-
-Create the visual representation of accumulated effort.
-
-### Goals
-
-* render one star per study context
-* render completed planets around their respective stars
-* distinguish active and completed planets
-* allow users to click stars
-* allow users to click planets
-* display context statistics
-* display planet histories
-* visualize growth of the user's study history over time
-
----
-
-## Phase 6 — Study Insights and Analytics
-
-Provide meaningful feedback about study behavior.
-
-### Goals
-
-Track statistics such as:
-
-```text
-total focused time
-focused time by context
-daily focus time
-weekly focus time
-average session length
-median session length
-longest session
-most productive day
-most productive time of day
-study consistency
-streaks
-context-switching patterns
-```
-
----
-
-## Phase 7 — Progression and Gamification
-
-Expand the collection system without making it intrusive.
-
-Possible features include:
-
-* achievements
-* rare planet traits
-* planet naming
-* moons
-* multiple ring types
-* larger or brighter stars
-* semester milestones
-* course-completion summaries
-* archived solar systems
-* constellation-style semester views
-
----
-
-## Phase 8 — Deployment and Production
-
-Prepare Nebula to operate as a real application.
-
-### Goals
-
-* Dockerize Spring Boot backend
-* Dockerize frontend
-* run PostgreSQL through Docker
-* configure production environment variables
-* securely manage authentication configuration
-* configure database migrations
-* deploy application
-* improve accessibility
-* improve error handling
-* add production logging
-* expand automated testing
-
----
+See ATTRIBUTIONS.md for third-party assets and libraries used by the project.

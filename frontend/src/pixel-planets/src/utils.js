@@ -45,7 +45,7 @@ export function generatePlanetByType(type,
                                      stage = "COMPLETE") {
     switch (type) {
         case "No atmosphere":
-            return createNoAtmospherePlanet(color, stage)
+            return createNoAtmospherePlanet(colors, stage)
         case "Ice Planet":
             return createIcePlanet(colors, stage)
         case "Gas giant 1":
