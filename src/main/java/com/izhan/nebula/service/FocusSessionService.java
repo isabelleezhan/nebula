@@ -139,7 +139,7 @@ public class FocusSessionService {
     private void createNextPlanet(Subject subject) {
 
         Planet nextPlanet = new Planet(
-                "Unnamed Planet",
+                "Aeris-Unnamed",
                 ThreadLocalRandom.current().nextLong(),
                 subject
         );

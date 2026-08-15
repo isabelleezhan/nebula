@@ -5,7 +5,6 @@ import {createGasGiant} from "./Planets/gasGiant.js";
 import {createGasGiantRing} from "./Planets/gasGiantRing.js";
 import {createIcePlanet} from "./Planets/icePlanet.js";
 import {createLavaPlanet} from "./Planets/lavaPlanet.js";
-import {createNoAtmospherePlanet} from "./Planets/noAtmosphere.js";
 import {createStarPlanet} from "./Planets/starPlanet.js";
 
 import {createSeededRandom} from './seededRandom.js'
