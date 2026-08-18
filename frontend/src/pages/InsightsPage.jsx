@@ -91,48 +91,51 @@ function InsightsPage() {
 
                 <section className="insights-overview">
                     <article className="insight-card">
-                        <p className="insight-label">
-                            TOTAL FOCUS
-                        </p>
+                        <div className="insight-card-top">
+                            <p className="insight-label">
+                                TOTAL FOCUS
+                            </p>
+
+                            {analytics.previousWeekFocusMinutes === 0 ? (
+                                <span className="weekly-change neutral">
+                                    First week
+                                </span>
+                            ) : (
+                                <span
+                                    className={
+                                        analytics.weeklyChangePercentage > 0
+                                            ? 'weekly-change positive'
+                                            : analytics.weeklyChangePercentage < 0
+                                                ? 'weekly-change negative'
+                                                : 'weekly-change neutral'
+                                    }
+                                >
+                                    {analytics.weeklyChangePercentage > 0 ? '▲' : analytics.weeklyChangePercentage < 0 ? '▼' : '–'}
+                                    {' '}
+                                    {Math.abs(Math.round(
+                                        analytics.weeklyChangePercentage
+                                    ))}
+                                    %
+                                </span>
+                            )}
+                        </div>
 
                         <p className="insight-value">
                             {analytics.totalFocusMinutes}
                         </p>
 
                         <p className="insight-unit">
-                            minutes
+                            minutes this week
                         </p>
-
-                        {analytics.previousWeekFocusMinutes === 0 ? (
-                            <p className="weekly-change neutral">
-                                First active week
-                            </p>
-                        ) : (
-                            <p
-                                className={
-                                    analytics.weeklyChangePercentage > 0
-                                        ? 'weekly-change positive'
-                                        : analytics.weeklyChangePercentage < 0
-                                            ? 'weekly-change negative'
-                                            : 'weekly-change neutral'
-                                }
-                            >
-                                {analytics.weeklyChangePercentage > 0 && '+'}
-
-                                {Math.round(
-                                    analytics.weeklyChangePercentage
-                                )}
-
-                                % from last week
-                            </p>
-                        )}
                     </article>
 
 
                     <article className="insight-card">
-                        <p className="insight-label">
-                            SESSIONS
-                        </p>
+                        <div className="insight-card-top">
+                            <p className="insight-label">
+                                SESSIONS
+                            </p>
+                        </div>
 
                         <p className="insight-value">
                             {
@@ -148,9 +151,11 @@ function InsightsPage() {
 
 
                     <article className="insight-card">
-                        <p className="insight-label">
-                            AVERAGE SESSION
-                        </p>
+                        <div className="insight-card-top">
+                            <p className="insight-label">
+                                AVERAGE SESSION
+                            </p>
+                        </div>
 
                         <p className="insight-value">
                             {Math.round(
@@ -166,9 +171,11 @@ function InsightsPage() {
 
 
                     <article className="insight-card">
-                        <p className="insight-label">
-                            LONGEST SESSION
-                        </p>
+                        <div className="insight-card-top">
+                            <p className="insight-label">
+                                LONGEST SESSION
+                            </p>
+                        </div>
 
                         <p className="insight-value">
                             {
@@ -240,6 +247,10 @@ function InsightsPage() {
                             const barHeight =
                                 (day.focusMinutes / maxMinutes) * 100
 
+                            const isPeakDay =
+                                day.focusMinutes > 0 &&
+                                day.focusMinutes === maxMinutes
+
                             return (
                                 <div
                                     key={day.day}
@@ -253,7 +264,11 @@ function InsightsPage() {
 
                                     <div className="weekly-chart-track">
                                         <div
-                                            className="weekly-chart-bar"
+                                            className={
+                                                isPeakDay
+                                                    ? 'weekly-chart-bar peak'
+                                                    : 'weekly-chart-bar'
+                                            }
                                             style={{
                                                 height: `${barHeight}%`
                                             }}

@@ -1,20 +1,20 @@
 .planet-detail-page {
     min-height: 100vh;
 
-    color: #f7f4ff;
+    color: var(--ink);
 
     background: radial-gradient(
             circle at 38% 27%,
-            rgba(92, 76, 145, 0.28),
+            rgba(92, 76, 145, 0.24),
             transparent 38%
     ),
-    #080711;
+    var(--void);
 }
 
 
 .planet-detail-main {
     width: min(980px, calc(100% - 96px));
-    min-height: calc(100vh - 80px);
+    min-height: calc(100vh - 76px);
 
     margin: 0 auto;
     padding: 54px 0 96px;
@@ -26,11 +26,11 @@
 .planet-detail-back {
     display: inline-block;
 
-    color: rgba(255, 255, 255, 0.58);
+    color: var(--ink-dim);
 
-    font-family: "Better VCR", monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.1em;
+    font-family: var(--font-ui);
+    font-size: 0.78rem;
+    font-weight: 600;
     text-decoration: none;
 
     transition: color 160ms ease,
@@ -88,39 +88,32 @@
 
 
 .planet-detail-label,
-.planet-detail-stage,
 .mission-log-label {
     margin: 0;
 
-    font-family: "Better VCR", monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.16em;
-}
+    color: var(--ink-dim);
 
-.planet-detail-label,
-.mission-log-label {
-    color: rgba(255, 255, 255, 0.55);
+    font-family: var(--font-ui);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
 }
 
 
 .planet-detail-info h1 {
     margin: 15px 0 11px;
 
-    font-family: "Better VCR", monospace;
+    font-family: var(--font-display);
     font-size: clamp(2.4rem, 5vw, 4rem);
     font-weight: 400;
     line-height: 1.1;
 }
 
 
-.planet-detail-stage {
-    color: #c6b4ff;
-}
-
-
 .planet-detail-progress {
     width: 100%;
-    margin-top: 38px;
+    margin-top: 26px;
 }
 
 
@@ -131,29 +124,15 @@
 
     margin-bottom: 10px;
 
-    color: rgba(255, 255, 255, 0.62);
-    font-size: 0.95rem;
+    color: var(--ink-dim);
+
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+    font-variant-numeric: tabular-nums;
 }
 
-
-.planet-detail-progress-track {
-    width: 100%;
-    height: 7px;
-
-    overflow: hidden;
-
-    background: rgba(255, 255, 255, 0.12);
-    border-radius: 999px;
-}
-
-
-.planet-detail-progress-fill {
-    height: 100%;
-
-    background: #c6b4ff;
-    border-radius: inherit;
-
-    box-shadow: 0 0 14px rgba(198, 180, 255, 0.65);
+.planet-detail-progress-header b {
+    color: var(--ink);
 }
 
 
@@ -161,9 +140,9 @@
     margin-top: 70px;
     padding: 34px;
 
-    background: rgba(255, 255, 255, 0.035);
+    background: rgba(255, 255, 255, 0.03);
 
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid var(--hairline-strong);
 
     border-radius: 20px;
 
@@ -179,14 +158,14 @@
 
     padding-bottom: 24px;
 
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--hairline);
 }
 
 
 .mission-log-header h2 {
     margin: 10px 0 0;
 
-    font-family: "Better VCR", monospace;
+    font-family: var(--font-display);
     font-size: clamp(1.5rem, 3vw, 2.1rem);
     font-weight: 400;
 }
@@ -195,12 +174,11 @@
 .mission-log-header > p {
     margin: 0;
 
-    color: rgba(255, 255, 255, 0.55);
+    color: var(--ink-dim);
 
-    font-family: "Better VCR", monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    font-family: var(--font-ui);
+    font-size: 0.78rem;
+    font-weight: 600;
 }
 
 
@@ -218,7 +196,7 @@
 
     padding: 22px 0;
 
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid var(--hairline);
 }
 
 
@@ -230,26 +208,31 @@
 .mission-date {
     margin: 0 0 7px;
 
-    font-family: "Better VCR", monospace;
-    font-size: 0.78rem;
+    color: var(--ink);
+
+    font-family: var(--font-ui);
+    font-size: 0.86rem;
+    font-weight: 700;
 }
 
 
 .mission-time {
     margin: 0;
 
-    color: rgba(255, 255, 255, 0.55);
-    font-size: 0.95rem;
+    color: var(--ink-dim);
+    font-family: var(--font-ui);
+    font-size: 0.86rem;
 }
 
 
 .mission-duration {
     margin: 0;
 
-    color: #c6b4ff;
+    color: var(--accent);
 
-    font-family: "Better VCR", monospace;
-    font-size: 0.8rem;
+    font-family: var(--font-ui);
+    font-size: 0.86rem;
+    font-weight: 700;
     white-space: nowrap;
 }
 
@@ -258,11 +241,9 @@
     margin: 0;
     padding: 38px 0 10px;
 
-    color: rgba(255, 255, 255, 0.58);
+    color: var(--ink-dim);
 
-    font-family: "Apple Garamond",
-    Georgia,
-    serif;
+    font-family: var(--font-body);
 
     font-size: 1.2rem;
     text-align: center;
@@ -276,14 +257,16 @@
 
     box-sizing: border-box;
 
-    color: #ffd7df;
-    background: rgba(120, 35, 58, 0.22);
+    color: var(--danger);
+    background: var(--danger-bg);
 
-    border: 1px solid rgba(255, 145, 170, 0.35);
+    border: 1px solid var(--danger-border);
 
     border-radius: 12px;
 
     text-align: center;
+
+    font-family: var(--font-ui);
 }
 
 .planet-name-display {
@@ -303,13 +286,13 @@
 
     box-sizing: border-box;
 
-    color: #f7f4ff;
+    color: var(--ink);
     background: transparent;
 
     border: none;
-    border-bottom: 1px solid rgba(198, 180, 255, 0.5);
+    border-bottom: 1px solid var(--accent-glow);
 
-    font-family: "Better VCR", monospace;
+    font-family: var(--font-display);
     font-size: clamp(2.4rem, 5vw, 4rem);
     font-weight: 400;
     line-height: 1.1;
@@ -318,7 +301,7 @@
 .planet-name-form input:focus {
     outline: none;
 
-    border-bottom-color: #c6b4ff;
+    border-bottom-color: var(--accent);
 }
 
 
@@ -333,10 +316,9 @@
 
     border-radius: 999px;
 
-    font-family: "Better VCR",
-    monospace;
-
-    font-size: 0.62rem;
+    font-family: var(--font-ui);
+    font-size: 0.7rem;
+    font-weight: 600;
 
     cursor: pointer;
 }
@@ -345,12 +327,12 @@
     margin: 15px 0 11px;
     padding: 0;
 
-    color: #f7f4ff;
+    color: var(--ink);
     background: transparent;
 
     border: none;
 
-    font-family: "Better VCR", monospace;
+    font-family: var(--font-display);
     font-size: clamp(2.4rem, 5vw, 4rem);
     font-weight: 400;
     line-height: 1.1;
@@ -361,7 +343,7 @@
 }
 
 .planet-name-button:hover {
-    text-shadow: 0 0 18px rgba(198, 180, 255, 0.28);
+    text-shadow: 0 0 18px var(--accent-glow);
 }
 
 @media (max-width: 760px) {

@@ -22,12 +22,16 @@ function AppNav() {
         }
     }
 
+    const initial =
+        user?.email?.trim().charAt(0).toUpperCase() || '?'
+
     return (
         <header className="app-nav">
             <NavLink
                 to="/orbit"
                 className="app-nav-logo"
             >
+                <span className="app-nav-mark" aria-hidden="true"/>
                 NEBULA
             </NavLink>
 
@@ -67,9 +71,15 @@ function AppNav() {
             </nav>
 
             <div className="app-nav-user">
-        <span className="app-nav-email">
-          {user.email}
-        </span>
+                <span className="app-nav-identity">
+                    <span className="avatar-circle" aria-hidden="true">
+                        {initial}
+                    </span>
+
+                    <span className="app-nav-email">
+                        {user.email}
+                    </span>
+                </span>
 
                 <button
                     type="button"

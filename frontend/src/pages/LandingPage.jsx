@@ -16,14 +16,14 @@ function LandingPage() {
                 <div className="landing-actions">
                     <Link
                         to="/login"
-                        className="login-button"
+                        className="btn btn-ghost"
                     >
                         Log in
                     </Link>
 
                     <Link
                         to="/register"
-                        className="launch-button"
+                        className="btn btn-primary"
                     >
                         Get started
                     </Link>
@@ -34,7 +34,7 @@ function LandingPage() {
 
                 <section className="landing-hero">
                     <p className="landing-eyebrow">
-                        GALACTIC FOCUS.
+                        Galactic focus protocol
                     </p>
 
                     <h1>
@@ -44,15 +44,44 @@ function LandingPage() {
                     </h1>
 
                     <p className="landing-description">
-                        Focus to evolve planets.
-                        <br/>
-                        Expand your galaxy,
-                        and discover where your time takes you.
+                        Every session evolves a planet. Every planet joins
+                        a system. Nothing decays &mdash; time spent
+                        focused is the only currency here.
                     </p>
+
+                    <div className="landing-cta-row">
+                        <Link to="/register" className="btn btn-lg btn-primary">
+                            Get started &rarr;
+                        </Link>
+
+                        <Link to="/login" className="btn btn-lg btn-ghost">
+                            Log in
+                        </Link>
+                    </div>
+
+                    <ol className="landing-loop">
+                        <li>
+                            <span className="landing-loop-label">Study</span>
+                            time spent focused
+                        </li>
+
+                        <li>
+                            <span className="landing-loop-label">Evolve</span>
+                            a planet grows in stages
+                        </li>
+
+                        <li>
+                            <span className="landing-loop-label">Stabilize</span>
+                            it joins your star system
+                        </li>
+                    </ol>
                 </section>
 
                 <section className="landing-planet-area">
                     <div className="planet-scene">
+                        <div className="orbit-ring outer" aria-hidden="true"/>
+                        <div className="orbit-ring inner" aria-hidden="true"/>
+
                         <div className="planet-glow"/>
 
                         <div className="landing-star">

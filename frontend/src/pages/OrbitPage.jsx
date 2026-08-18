@@ -5,6 +5,8 @@ import {getActivePlanet, renamePlanet} from '../api/planetApi.js'
 import {recordFocusSession} from '../api/focusSessionApi'
 import '../styles/OrbitPage.css'
 import PixelPlanet from "../components/PixelPlanet.jsx";
+import StageChip from "../components/StageChip.jsx";
+import XpMeter from "../components/XpMeter.jsx";
 import {getPlanetGlowColor} from "../pixel-planets/src/planetVisuals.js";
 
 
@@ -128,6 +130,10 @@ function OrbitPage() {
                     currentSubjectId => {
                         if (currentSubjectId) {
                             return currentSubjectId
+                        }
+
+                        if (loadedSubjects.length === 0) {
+                            return ''
                         }
 
                         return String(
@@ -505,21 +511,23 @@ function OrbitPage() {
                     </p>
 
                     {subjects.length > 0 && (<>
-                        <select
-                            className="subject-selector"
-                            value={selectedSubjectId}
-                            onChange={(event) => {
-                                setSelectedSubjectId(event.target.value)
-                            }}
-                            disabled={isFocusing}
-                        >
-                            {subjects.map((subject) => (<option
-                                key={subject.id}
-                                value={subject.id}
+                        <div className="subject-selector-wrap">
+                            <select
+                                className="subject-selector"
+                                value={selectedSubjectId}
+                                onChange={(event) => {
+                                    setSelectedSubjectId(event.target.value)
+                                }}
+                                disabled={isFocusing}
                             >
-                                {subject.name}
-                            </option>))}
-                        </select>
+                                {subjects.map((subject) => (<option
+                                    key={subject.id}
+                                    value={subject.id}
+                                >
+                                    {subject.name}
+                                </option>))}
+                            </select>
+                        </div>
 
                         <button
                             type="button"
@@ -592,6 +600,7 @@ function OrbitPage() {
 
                         <button
                             type="button"
+                            className="btn btn-lg btn-primary"
                             onClick={() => {
                                 setIsCreatingSubject(true)
                             }}
@@ -699,9 +708,7 @@ function OrbitPage() {
                         )}
 
 
-                        <p className="world-stage">
-                            {planet?.stage || 'BARREN'}
-                        </p>
+                        <StageChip stage={planet?.stage || 'BARREN'}/>
 
                         <div
                             className="world-progress"
@@ -710,32 +717,23 @@ function OrbitPage() {
                                 className={'progress-header'}
                             >
                   <span>
-                    {planet?.accumulatedFocusMinutes ?? 0} minutes
+                    <b>{planet?.accumulatedFocusMinutes ?? 0}</b> / {planet?.requiredFocusMinutes ?? 600} minutes
                     </span>
                                 <span>
-                        {planet?.requiredFocusMinutes ?? 600} minutes
+                        {Math.round(planet?.progressPercentage ?? 0)}%
                                     </span>
                             </div>
 
-                            <div
-                                className={'progress-track'}
-                            >
-                                <div
-                                    className={'progress-fill'}
-                                    style={{
-                                        width: `${Math.min(planet?.progressPercentage ?? 0, 100)}%`
-                                    }}
-                                />
-                            </div>
+                            <XpMeter percentage={planet?.progressPercentage ?? 0}/>
                         </div>
 
                         {!isFocusing ? (<button
                             type="button"
-                            className={'begin-focus-button'}
+                            className={'btn btn-lg btn-primary begin-focus-button'}
                             onClick={handleBeginFocus}
                             disabled={!planet}
                         >
-                            {planet?.accumulatedFocusMinutes > 1 ? 'RESUME ORBIT' : 'BEGIN ORBIT'}
+                            {planet?.accumulatedFocusMinutes > 1 ? 'Resume orbit' : 'Begin orbit'}
                         </button>) : (<div
                             className={'focus-session'}
                         >
@@ -746,9 +744,14 @@ function OrbitPage() {
                             </p>
 
                             <p
-                                className={'focus-status'}
+                                className={
+                                    isPaused
+                                        ? 'focus-status paused'
+                                        : 'focus-status live'
+                                }
                             >
-                                {isPaused ? 'ORBIT PAUSED' : 'MISSION IN PROGRESS'}
+                                <span className="focus-status-dot" aria-hidden="true"/>
+                                {isPaused ? 'Orbit paused' : 'Mission in progress'}
                             </p>
 
                             <div
@@ -756,7 +759,7 @@ function OrbitPage() {
                             >
                                 <button
                                     type="button"
-                                    className="pause-focus-button"
+                                    className="btn btn-lg btn-primary pause-focus-button"
                                     onClick={handleTogglePause}
                                     disabled={isSavingSession}
                                 >
@@ -765,7 +768,7 @@ function OrbitPage() {
 
                                 <button
                                     type="button"
-                                    className="end-focus-button"
+                                    className="btn btn-lg btn-ghost end-focus-button"
                                     onClick={handleEndFocus}
                                     disabled={isSavingSession}
                                 >

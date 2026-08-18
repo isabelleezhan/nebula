@@ -1,0 +1,236 @@
+/*
+  Shared design tokens + primitives for Nebula.
+
+  Font roles:
+    --font-display  "Better VCR"     big, celebratory moments only (headlines,
+                                      the timer, world names, hero numbers)
+    --font-body      "Apple Garamond" reading copy / descriptions
+    --font-ui        system sans      chrome: nav, buttons, labels, chips,
+                                      anything read at a glance rather than read
+*/
+
+:root {
+    --void: #07060d;
+    --void-1: #0d0b18;
+    --void-2: #14111f;
+    --void-3: #1c1830;
+
+    --hairline: rgba(255, 255, 255, 0.09);
+    --hairline-strong: rgba(255, 255, 255, 0.17);
+
+    --ink: #f5f2fb;
+    --ink-dim: rgba(245, 242, 251, 0.62);
+    --ink-faint: rgba(245, 242, 251, 0.42);
+
+    --accent: #b9a4ff;
+    --accent-strong: #8f74e8;
+    --accent-glow: rgba(185, 164, 255, 0.45);
+
+    --rose: #ec6fbd;
+    --rose-strong: #c94a9c;
+    --rose-glow: rgba(236, 111, 189, 0.42);
+    --rose-ink: #34081f;
+
+    --success: #7fd9a0;
+    --danger: #ff9fb2;
+    --danger-bg: rgba(255, 120, 150, 0.14);
+    --danger-border: rgba(255, 145, 170, 0.35);
+
+    --font-display: "Better VCR", monospace;
+    --font-body: "Apple Garamond", Georgia, serif;
+    --font-ui: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+}
+
+
+/* ---------------- BUTTONS ---------------- */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 13px 22px;
+
+    color: inherit;
+    background: transparent;
+
+    border: 1px solid transparent;
+    border-radius: 999px;
+
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+
+    cursor: pointer;
+
+    transition: transform 150ms ease,
+    box-shadow 150ms ease,
+    background 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease,
+    opacity 150ms ease;
+}
+
+.btn:disabled {
+    opacity: 0.5;
+
+    cursor: not-allowed;
+
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.btn-lg {
+    padding: 15px 26px;
+    font-size: 0.85rem;
+}
+
+.btn-primary {
+    color: var(--rose-ink);
+    background: linear-gradient(135deg, #ffd9f0, var(--rose));
+
+    box-shadow: 0 10px 26px var(--rose-glow);
+}
+
+.btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 34px var(--rose-glow);
+}
+
+.btn-secondary {
+    color: var(--ink-dim);
+    background: rgba(255, 255, 255, 0.035);
+
+    border-color: var(--hairline-strong);
+}
+
+.btn-secondary:hover:not(:disabled) {
+    color: var(--ink);
+    background: rgba(255, 255, 255, 0.075);
+}
+
+.btn-ghost {
+    color: var(--ink);
+    background: transparent;
+
+    border-color: var(--hairline-strong);
+}
+
+.btn-ghost:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+
+/* ---------------- STAGE CHIP ---------------- */
+/* Planet evolution stage rendered as a colored rank, shared vocabulary
+   between Orbit, Galaxy, and the detail pages. Color comes from
+   stageVisuals.js via the --chip-color/--chip-bg/--chip-border custom
+   properties set inline on the element. */
+
+.stage-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 6px 13px 6px 9px;
+
+    color: var(--chip-color, var(--ink-dim));
+    background: var(--chip-bg, rgba(255, 255, 255, 0.06));
+
+    border: 1px solid var(--chip-border, var(--hairline-strong));
+    border-radius: 999px;
+
+    font-family: var(--font-ui);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.stage-chip .stage-dot {
+    width: 7px;
+    height: 7px;
+    flex-shrink: 0;
+
+    background: var(--chip-color, var(--ink-dim));
+    border-radius: 50%;
+
+    box-shadow: 0 0 6px var(--chip-color, transparent);
+}
+
+.stage-chip.mini {
+    padding: 4px 10px 4px 8px;
+    font-size: 0.6rem;
+}
+
+.stage-chip.mini .stage-dot {
+    width: 6px;
+    height: 6px;
+}
+
+
+/* ---------------- XP / PROGRESS METER ---------------- */
+/* A ticked, segmented bar -- reads as a game meter rather than a browser
+   loading bar. Ticks are generated in JS; each carries the .filled class
+   up to the current progress percentage. */
+
+.xp-track {
+    display: flex;
+    gap: 3px;
+
+    height: 14px;
+    padding: 3px;
+
+    overflow: hidden;
+
+    background: rgba(255, 255, 255, 0.06);
+
+    border: 1px solid var(--hairline);
+    border-radius: 8px;
+}
+
+.xp-tick {
+    flex: 1;
+
+    min-width: 0;
+
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+
+    transition: background 300ms ease, box-shadow 300ms ease;
+}
+
+.xp-tick.filled {
+    background: linear-gradient(90deg, var(--accent-strong), var(--accent));
+    box-shadow: 0 0 8px var(--accent-glow);
+}
+
+
+/* ---------------- AVATAR ---------------- */
+
+.avatar-circle {
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    color: var(--void);
+    background: linear-gradient(135deg, var(--accent-strong), var(--accent));
+
+    border-radius: 50%;
+
+    font-family: var(--font-ui);
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}

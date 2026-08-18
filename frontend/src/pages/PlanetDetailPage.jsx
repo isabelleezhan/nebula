@@ -4,6 +4,8 @@ import AppNav from '../components/AppNav'
 import {getSessionsForPlanet} from '../api/focusSessionApi'
 import {getPlanet, renamePlanet} from '../api/planetApi'
 import PixelPlanet from '../components/PixelPlanet'
+import StageChip from '../components/StageChip'
+import XpMeter from '../components/XpMeter'
 import '../styles/PlanetDetailPage.css'
 
 
@@ -213,13 +215,7 @@ function PlanetDetailPage() {
                                     </button>
                                 )}
 
-                                <p
-                                    className={
-                                        'planet-detail-stage'
-                                    }
-                                >
-                                    {planet?.stage}
-                                </p>
+                                <StageChip stage={planet?.stage}/>
 
                                 <div
                                     className={
@@ -232,10 +228,10 @@ function PlanetDetailPage() {
                                         }
                                     >
                                         <span>
-                                            {
+                                            <b>{
                                                 planet
                                                     ?.accumulatedFocusMinutes
-                                            }
+                                            }</b>
                                             {' minutes'}
                                         </span>
 
@@ -249,27 +245,7 @@ function PlanetDetailPage() {
                                         </span>
                                     </div>
 
-                                    <div
-                                        className={
-                                            'planet-detail-progress-track'
-                                        }
-                                    >
-                                        <div
-                                            className={
-                                                'planet-detail-progress-fill'
-                                            }
-                                            style={{
-                                                width: `${
-                                                    Math.min(
-                                                        planet
-                                                            ?.progressPercentage ??
-                                                        0,
-                                                        100
-                                                    )
-                                                }%`
-                                            }}
-                                        />
-                                    </div>
+                                    <XpMeter percentage={planet?.progressPercentage ?? 0}/>
                                 </div>
                             </div>
                         </section>

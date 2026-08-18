@@ -14,16 +14,16 @@
     display: grid;
     place-items: center;
 
-    color: #eee9ff;
+    color: var(--ink);
 
     background: radial-gradient(
             circle,
             rgba(238, 233, 255, 0.2),
-            rgba(198, 180, 255, 0.07) 58%,
+            var(--accent-glow) 58%,
             transparent 75%
     );
 
-    border: 1px solid rgba(198, 180, 255, 0.25);
+    border: 1px solid var(--hairline-strong);
 
     border-radius: 50%;
 
@@ -37,12 +37,11 @@
     margin: 0;
     padding: 0;
 
-    color: #f7f4ff;
+    color: var(--ink);
     background: transparent;
     border: none;
 
-    font-family: "Better VCR",
-    monospace;
+    font-family: var(--font-display);
 
     font-size: clamp(1.6rem, 4vw, 2.5rem);
 
@@ -55,7 +54,7 @@
 
 
 .star-name-button:hover {
-    text-shadow: 0 0 16px rgba(198, 180, 255, 0.28);
+    text-shadow: 0 0 16px var(--accent-glow);
 }
 
 
@@ -69,15 +68,14 @@
 
     padding: 0 0 4px;
 
-    color: #f7f4ff;
+    color: var(--ink);
     background: transparent;
 
     border: none;
 
-    border-bottom: 1px solid rgba(198, 180, 255, 0.5);
+    border-bottom: 1px solid var(--accent-glow);
 
-    font-family: "Better VCR",
-    monospace;
+    font-family: var(--font-display);
 
     font-size: clamp(1.6rem, 4vw, 2.5rem);
 
@@ -88,20 +86,21 @@
 .star-name-form input:focus {
     outline: none;
 
-    border-bottom-color: #c6b4ff;
+    border-bottom-color: var(--accent);
 }
 
 .star-system-link {
-    display: block;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+
     margin-top: 8px;
 
-    color: rgba(198, 180, 255, 0.7);
+    color: var(--accent);
 
-    font-family: "Better VCR",
-    monospace;
-
-    font-size: 0.65rem;
-    letter-spacing: 0.08em;
+    font-family: var(--font-ui);
+    font-size: 0.76rem;
+    font-weight: 600;
 
     text-decoration: none;
 
@@ -109,10 +108,14 @@
     text-shadow 160ms ease;
 }
 
-.star-system-link:hover {
-    color: #c6b4ff;
+.star-system-link::after {
+    content: "\2192";
+}
 
-    text-shadow: 0 0 12px rgba(198, 180, 255, 0.3);
+.star-system-link:hover {
+    color: var(--ink);
+
+    text-shadow: 0 0 12px var(--accent-glow);
 }
 
 .star-system-title-group {

@@ -85,7 +85,7 @@ function GalaxyPage() {
                         </p>
                         <Link
                             to="/orbit"
-                            className="empty-galaxy-link"
+                            className="btn btn-lg btn-primary empty-galaxy-link"
                         >
                             Create a star in Orbit
                         </Link>

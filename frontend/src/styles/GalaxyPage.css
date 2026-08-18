@@ -1,19 +1,19 @@
 .galaxy-page {
     min-height: 100vh;
 
-    color: #f7f4ff;
+    color: var(--ink);
 
     background: radial-gradient(
             circle at 50% 28%,
-            rgba(92, 76, 145, 0.24),
+            rgba(92, 76, 145, 0.2),
             transparent 38%
     ),
-    #080711;
+    var(--void);
 }
 
 
 .galaxy-main {
-    min-height: calc(100vh - 80px);
+    min-height: calc(100vh - 76px);
     padding: 56px 48px 96px;
 
     box-sizing: border-box;
@@ -33,11 +33,13 @@
 .galaxy-eyebrow {
     margin: 0 0 14px;
 
-    color: rgba(255, 255, 255, 0.55);
+    color: var(--ink-dim);
 
-    font-family: "Better VCR", monospace;
+    font-family: var(--font-ui);
     font-size: 0.72rem;
-    letter-spacing: 0.16em;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
 }
 
 .galaxy-summary {
@@ -48,11 +50,11 @@
     justify-content: center;
     gap: 10px;
 
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--ink-faint);
 
-    font-family: "Better VCR", monospace;
-    font-size: 0.66rem;
-    letter-spacing: 0.1em;
+    font-family: var(--font-ui);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
 }
 
@@ -82,38 +84,46 @@
     justify-content: space-between;
     gap: 24px;
 
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--hairline);
 }
 
 
 .star-system-label {
     margin: 0 0 9px;
 
-    color: rgba(255, 255, 255, 0.48);
+    color: var(--ink-faint);
 
-    font-family: "Better VCR", monospace;
-    font-size: 0.64rem;
-    letter-spacing: 0.16em;
+    font-family: var(--font-ui);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
 }
 
 
 .star-system-header h2 {
     margin: 0;
 
-    font-family: "Better VCR", monospace;
+    font-family: var(--font-display);
     font-size: clamp(1.6rem, 4vw, 2.5rem);
     font-weight: 400;
 }
 
 
 .star-system-count {
-    margin: 0 0 5px;
+    margin: 0;
+    padding: 7px 14px;
 
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--ink-dim);
+    background: rgba(255, 255, 255, 0.04);
 
-    font-family: "Better VCR", monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.1em;
+    border: 1px solid var(--hairline);
+    border-radius: 999px;
+
+    font-family: var(--font-ui);
+    font-size: 0.76rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
 }
 
 
@@ -130,14 +140,15 @@
 
     background: radial-gradient(
             circle at 50% 48%,
-            rgba(146, 118, 255, 0.16),
+            rgba(146, 118, 255, 0.14),
             transparent 38%
     ),
-    rgba(255, 255, 255, 0.025);
+    rgba(255, 255, 255, 0.02);
 
-    border: 1px solid rgba(255, 255, 255, 0.11);
+    border: 1px solid var(--hairline-strong);
 
     border-radius: 24px;
+    box-shadow: 0 30px 70px -36px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.03);
 
     perspective: 1000px;
 }
@@ -211,20 +222,20 @@
 
 .carousel-card.previous {
     z-index: 1;
-    opacity: 0.42;
+    opacity: 0.68;
 
-    transform: translate(-50%, -50%) translateX(-185px) translateZ(-180px) rotateY(42deg) scale(0.72);
+    transform: translate(-50%, -50%) translateX(-185px) translateZ(-140px) rotateY(38deg) scale(0.78);
 
-    filter: brightness(0.58);
+    filter: brightness(0.8);
 }
 
 .carousel-card.next {
     z-index: 1;
-    opacity: 0.42;
+    opacity: 0.68;
 
-    transform: translate(-50%, -50%) translateX(185px) translateZ(-180px) rotateY(-42deg) scale(0.72);
+    transform: translate(-50%, -50%) translateX(185px) translateZ(-140px) rotateY(-38deg) scale(0.78);
 
-    filter: brightness(0.58);
+    filter: brightness(0.8);
 }
 
 .carousel-card.previous,
@@ -250,20 +261,20 @@
 }
 
 .carousel-card.previous:hover {
-    opacity: 0.78;
+    opacity: 0.92;
 
-    transform: translate(-50%, -50%) translateX(-235px) translateZ(-55px) rotateY(34deg) scale(0.8);
+    transform: translate(-50%, -50%) translateX(-225px) translateZ(-45px) rotateY(30deg) scale(0.85);
 
-    filter: brightness(0.8);
+    filter: brightness(0.95);
 }
 
 
 .carousel-card.next:hover {
-    opacity: 0.78;
+    opacity: 0.92;
 
-    transform: translate(-50%, -50%) translateX(235px) translateZ(-55px) rotateY(-34deg) scale(0.8);
+    transform: translate(-50%, -50%) translateX(225px) translateZ(-45px) rotateY(-30deg) scale(0.85);
 
-    filter: brightness(0.8);
+    filter: brightness(0.95);
 }
 
 .carousel-card-content {
@@ -331,15 +342,16 @@
 
     padding: 0;
 
-    color: #f7f4ff;
-    background: rgba(255, 255, 255, 0.055);
+    color: var(--ink);
+    background: rgba(255, 255, 255, 0.05);
 
-    border: 1px solid rgba(255, 255, 255, 0.16);
+    border: 1px solid var(--hairline-strong);
 
     border-radius: 50%;
 
-    font-family: "Better VCR", monospace;
-    font-size: 1rem;
+    font-family: var(--font-ui);
+    font-size: 1.1rem;
+    font-weight: 700;
 
     cursor: pointer;
 
@@ -352,9 +364,9 @@
 .carousel-control:hover {
     transform: scale(1.06);
 
-    background: rgba(198, 180, 255, 0.12);
+    background: rgba(198, 180, 255, 0.14);
 
-    border-color: rgba(198, 180, 255, 0.45);
+    border-color: var(--accent-glow);
 }
 
 
@@ -362,36 +374,33 @@
     width: min(520px, 100%);
     margin: 26px auto 0;
 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
     text-align: center;
 }
 
 
-.carousel-status,
-.carousel-stage-label {
+.carousel-status {
     margin: 0;
 
-    font-family: "Better VCR", monospace;
-    font-size: 0.66rem;
+    color: var(--ink-faint);
+
+    font-family: var(--font-ui);
+    font-size: 0.7rem;
+    font-weight: 700;
     letter-spacing: 0.14em;
-}
-
-
-.carousel-status {
-    color: rgba(255, 255, 255, 0.48);
+    text-transform: uppercase;
 }
 
 
 .carousel-details h3 {
-    margin: 12px 0 10px;
+    margin: 12px 0 14px;
 
-    font-family: "Better VCR", monospace;
+    font-family: var(--font-display);
     font-size: clamp(1.5rem, 4vw, 2.25rem);
     font-weight: 400;
-}
-
-
-.carousel-stage-label {
-    color: #c6b4ff;
 }
 
 
@@ -400,56 +409,46 @@
     justify-content: space-between;
     gap: 20px;
 
-    margin-top: 25px;
+    width: 100%;
+
+    margin-top: 22px;
     margin-bottom: 10px;
 
-    color: rgba(255, 255, 255, 0.62);
+    color: var(--ink-dim);
 
-    font-size: 0.9rem;
+    font-family: var(--font-ui);
+    font-size: 0.88rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.carousel-progress-header b {
+    color: var(--ink);
 }
 
 
-.carousel-progress-track {
+.carousel-details .xp-track {
     width: 100%;
-    height: 7px;
-
-    overflow: hidden;
-
-    background: rgba(255, 255, 255, 0.12);
-
-    border-radius: 999px;
-}
-
-
-.carousel-progress-fill {
-    height: 100%;
-
-    background: #c6b4ff;
-    border-radius: inherit;
-
-    box-shadow: 0 0 14px rgba(198, 180, 255, 0.65);
-
-    transition: width 300ms ease;
 }
 
 
 .carousel-hint {
     margin: 15px 0 0;
 
-    color: rgba(255, 255, 255, 0.42);
+    color: var(--ink-faint);
 
-    font-size: 0.84rem;
+    font-family: var(--font-ui);
+    font-size: 0.82rem;
 }
 
 
 .galaxy-loading {
     margin: 80px auto;
 
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--ink-dim);
 
-    font-family: "Better VCR", monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.12em;
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
     text-align: center;
 }
 
@@ -461,14 +460,16 @@
 
     box-sizing: border-box;
 
-    color: #ffd7df;
-    background: rgba(120, 35, 58, 0.22);
+    color: var(--danger);
+    background: var(--danger-bg);
 
-    border: 1px solid rgba(255, 145, 170, 0.35);
+    border: 1px solid var(--danger-border);
 
     border-radius: 12px;
 
     text-align: center;
+
+    font-family: var(--font-ui);
 }
 
 
@@ -476,10 +477,10 @@
 .empty-star-system {
     box-sizing: border-box;
 
-    color: rgba(255, 255, 255, 0.72);
+    color: var(--ink-dim);
     background: rgba(255, 255, 255, 0.035);
 
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid var(--hairline-strong);
 
     border-radius: 20px;
 
@@ -492,10 +493,7 @@
     margin: 72px auto 0;
     padding: 48px 32px;
 
-    font-family: "Apple Garamond",
-    Georgia,
-    serif;
-
+    font-family: var(--font-body);
     font-size: 1.35rem;
 }
 
@@ -503,6 +501,9 @@
 .empty-star-system {
     margin: 0;
     padding: 40px;
+
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
 }
 
 
@@ -513,19 +514,8 @@
 
 
 .empty-galaxy-link {
-    display: inline-block;
-
+    display: inline-flex;
     margin-top: 24px;
-    padding: 13px 21px;
-
-    color: #0d0a18;
-    background: #eee9ff;
-
-    border-radius: 999px;
-
-    font-family: "Better VCR", monospace;
-    font-size: 0.7rem;
-    text-decoration: none;
 }
 
 

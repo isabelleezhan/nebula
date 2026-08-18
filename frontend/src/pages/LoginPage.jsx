@@ -94,9 +94,15 @@ function LoginPage() {
                             />
                         </div>
 
+                        {error && (
+                            <p className="auth-error">
+                                {error}
+                            </p>
+                        )}
+
                         <button
                             type="submit"
-                            className="auth-submit"
+                            className="btn btn-lg btn-primary auth-submit"
                             disabled={isSubmitting}
                         >
                             {isSubmitting

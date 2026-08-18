@@ -1,6 +1,8 @@
 import {useEffect, useState} from 'react'
 import {renameSubject} from "../api/subjectApi.js";
 import PixelPlanet from '../components/PixelPlanet'
+import StageChip from '../components/StageChip'
+import XpMeter from '../components/XpMeter'
 import {Link} from 'react-router'
 import {getPlanetGlowColor} from "../pixel-planets/src/planetVisuals.js";
 
@@ -399,16 +401,11 @@ function StarSystemCarousel({
                     {activePlanet.name}
                 </h3>
 
-                <p className="carousel-stage-label">
-                    {activePlanet.stage}
-                </p>
+                <StageChip stage={activePlanet.stage}/>
 
                 <div className="carousel-progress-header">
                     <span>
-                        {
-                            activePlanet
-                                .accumulatedFocusMinutes
-                        }
+                        <b>{activePlanet.accumulatedFocusMinutes}</b>
                         {' minutes'}
                     </span>
 
@@ -421,22 +418,7 @@ function StarSystemCarousel({
                     </span>
                 </div>
 
-                <div className="carousel-progress-track">
-                    <div
-                        className={
-                            'carousel-progress-fill'
-                        }
-                        style={{
-                            width: `${
-                                Math.min(
-                                    activePlanet
-                                        .progressPercentage,
-                                    100
-                                )
-                            }%`
-                        }}
-                    />
-                </div>
+                <XpMeter percentage={activePlanet.progressPercentage}/>
 
                 <p className="carousel-hint">
                     Select the world to view its

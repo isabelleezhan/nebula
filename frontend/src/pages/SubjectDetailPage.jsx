@@ -6,6 +6,8 @@ import {getSessionsForSubject} from '../api/focusSessionApi.js'
 import '../styles/SubjectDetailPage.css'
 import AppNav from '../components/AppNav'
 import PixelPlanet from "../components/PixelPlanet.jsx";
+import StageChip from "../components/StageChip.jsx";
+import XpMeter from "../components/XpMeter.jsx";
 
 function SubjectDetailPage() {
     const {subjectId} = useParams()
@@ -161,9 +163,7 @@ function SubjectDetailPage() {
                                             {planet.name}
                                         </p>
 
-                                        <p className="subject-world-stage">
-                                            STABILIZED
-                                        </p>
+                                        <StageChip stage="COMPLETE" mini label="Stabilized"/>
 
                                         {index < completedPlanets.length - 1 && (
                                             <div
@@ -188,22 +188,24 @@ function SubjectDetailPage() {
                                     <PixelPlanet planet={currentPlanet}/>
                                 </div>
 
-                                <div>
+                                <div className="subject-current-world-info">
                                     <h2>
                                         {currentPlanet.name}
                                     </h2>
 
-                                    <p>
-                                        {currentPlanet.stage}
-                                    </p>
+                                    <StageChip stage={currentPlanet.stage}/>
 
-                                    <p>
-                                        {Math.round(
-                                            currentPlanet
-                                                .progressPercentage
-                                        )}
-                                        % evolved
-                                    </p>
+                                    <div className="subject-current-world-progress">
+                                        <XpMeter percentage={currentPlanet.progressPercentage}/>
+
+                                        <p>
+                                            {Math.round(
+                                                currentPlanet
+                                                    .progressPercentage
+                                            )}
+                                            % evolved
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </section>
