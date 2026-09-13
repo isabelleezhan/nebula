@@ -45,7 +45,7 @@ function LandingPage() {
 
                     <p className="landing-description">
                         Every session evolves a planet. Every planet joins
-                        a system. Nothing decays &mdash; time spent
+                        a system. Time spent
                         focused is the only currency here.
                     </p>
 

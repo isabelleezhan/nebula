@@ -4,7 +4,7 @@ import {createCamera} from '../pixel-planets/src/camera.js'
 import {createClock, createScene, createWebGlRenderer} from '../pixel-planets/src/Three.js'
 import {generatePlanetByType, setPlanetRandomSeed} from '../pixel-planets/src/utils.js'
 import {generatePlanetPalette} from '../pixel-planets/src/planetPaletteGenerator.js'
-import {evolvePalette} from '../pixel-planets/src/planetColorEvolution.js'
+import {evolvePalette} from '../pixel-planets/src/PlanetColorEvolution.js'
 import {getPlanetType} from '../pixel-planets/src/planetVisuals.js'
 import '../styles/PixelPlanet.css'
 
